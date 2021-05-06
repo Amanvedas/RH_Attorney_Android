@@ -183,10 +183,10 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
     }
 
     override fun failureCallBack(failureMsg: String?) {
-        //TODO("Not yet implemented")
+        //("Not yet implemented")
     }
 
     override fun successCallBack(body: String?, from: String?) {
-        //TODO("Not yet implemented")
+        //("Not yet implemented")
     }
 }

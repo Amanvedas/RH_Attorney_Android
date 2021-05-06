@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context="com.rafayee.RH.OtpVerification.View.VerificationActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="32dp"
+                android:src="@drawable/back_white" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="84dp"
+                    android:layout_marginBottom="58dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Verification"
+                        android:textColor="@color/toolbar_color"
+                        android:textSize="26sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginTop="70dp"
+                        android:layout_marginRight="60dp"
+                        android:fontFamily="@font/raleway_regular"
+                        android:gravity="center"
+                        android:text="Enter the verification code, we just sent to your Email ID"
+                        android:textColor="@color/toolbar_color"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="55dp"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/ed1"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/bg_edittext"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:textColor="#616161"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="20sp"
+                            android:selectAllOnFocus="true"
+                            android:textCursorDrawable="@color/toolbar_color" />
+
+                        <EditText
+                            android:id="@+id/ed2"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/bg_edittext"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:textColor="#616161"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="20sp"
+                            android:selectAllOnFocus="true"
+                            android:textCursorDrawable="@color/toolbar_color" />
+
+                        <EditText
+                            android:id="@+id/ed3"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/bg_edittext"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:textColor="#616161"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="20sp"
+                            android:selectAllOnFocus="true"
+                            android:textCursorDrawable="@color/toolbar_color" />
+
+                        <EditText
+                            android:id="@+id/ed4"
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_margin="5dp"
+                            android:background="@drawable/bg_edittext"
+                            android:gravity="center"
+                            android:inputType="number"
+                            android:maxLength="1"
+                            android:textColor="#616161"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textSize="20sp"
+                            android:selectAllOnFocus="true"
+                            android:textCursorDrawable="@color/toolbar_color" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="32dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/raleway_regular"
+                            android:text="If you didn't receive a code!"
+                            android:textColor="@color/toolbar_color"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/raleway_bold"
+                            android:text="  Resend"
+                            android:textColor="@color/toolbar_color"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/verify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="32dp"
+                        android:src="@drawable/verify" />
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
