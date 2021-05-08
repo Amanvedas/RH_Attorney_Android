@@ -38,13 +38,15 @@ class AlertDialogPresenter {
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
         val imgCanel: Button = dialog.findViewById(R.id.img_cancel)
-        val imgSignout: Button = dialog.findViewById(R.id.img_sign_out)
+        val imgSignout: TextView = dialog.findViewById(R.id.img_sign_out)
         imgCanel.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
         })
         imgSignout.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
             iUpdate.finishView()
+            context.startActivity(Intent(context, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
+
         })
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()

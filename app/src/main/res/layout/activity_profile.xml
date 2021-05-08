@@ -162,7 +162,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="120dp"
-                android:src="@drawable/ic_baseline_video"
+                android:src="@drawable/youtube"
                 android:layout_marginLeft="100dp"
                 />
             <TextView
@@ -208,14 +208,62 @@
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/square_box"
                 />
-            <TextView
-                android:id="@+id/txt_edc_disc"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/rl_dot"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt_education"
-                android:layout_margin="15dp"
-                android:text="Juris Doctor, University of Denver Sturm College of Law Bachelor of Science, Oklahoma State University Bar Admissions: Colorado Bar, 2013; U.S. District Court – Colorado; U.S. Court of Appeals – 10th Circuit"
-                />
+
+                >
+                <TextView
+                    android:id="@+id/txt_dot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/blue_boarder"
+                    android:backgroundTint="@color/toolbar_color"
+                    />
+                <TextView
+                    android:id="@+id/txt_edc_disc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    android:layout_toRightOf="@id/txt_dot"
+                    android:text="University of Denver Sturm College of Law Bachelor of Science"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_dot1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_dot"
+
+                >
+                <TextView
+                    android:id="@+id/txt_dot1"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/blue_boarder"
+                    android:backgroundTint="@color/toolbar_color"
+                    />
+                <TextView
+                    android:id="@+id/txt_edc_disc1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    android:text="Admissions: Colorado Bar, 2013; U.S. District Court – Colorado; U.S. Court of Appeals – 10th Circuit"
+                    android:layout_toRightOf="@id/txt_dot1"
+                    />
+            </RelativeLayout>
+
+
             <TextView
                 android:id="@+id/awards"
                 android:layout_width="120dp"
@@ -223,23 +271,81 @@
                 android:text="Awards"
                 android:textColor="@color/toolbar_color"
                 android:gravity="center"
-                android:layout_below="@id/txt_edc_disc"
+                android:layout_below="@id/rl_dot1"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/square_box"
                 />
+            <RelativeLayout
+                android:id="@+id/rl_award_dot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/awards"
+                android:layout_marginTop="5dp"
+
+                >
+                <TextView
+                    android:id="@+id/txt_award_dot1"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/blue_boarder"
+                    android:backgroundTint="@color/toolbar_color"
+                    />
+                <TextView
+                    android:id="@+id/txt_award_edc_disc1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    android:text="Super Lawyers Rising Star 2015, 2016, 2017 "
+                    android:layout_toRightOf="@id/txt_award_dot1"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_award_dot2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_award_dot"
+
+                >
+                <TextView
+                    android:id="@+id/txt_award_dot2"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/blue_boarder"
+                    android:backgroundTint="@color/toolbar_color"
+                    />
+                <TextView
+                    android:id="@+id/txt_award_edc_disc2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    android:text="5280 Top Lawyer in Denver Real Estate 2017 Law Week Colorado – Up and Coming Lawyers 2015"
+                    android:layout_toRightOf="@id/txt_award_dot2"
+                    />
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/txt_id_disc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:visibility="gone"
                 android:layout_below="@id/awards"
                 android:text="Super Lawyers Rising Star 2015, 2016, 2017 \n 5280 Top Lawyer in Denver Real Estate 2017 Law Week Colorado – Up and Coming Lawyers 2015"
                 />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_id_disc"
+                android:layout_below="@id/rl_award_dot2"
+                android:layout_marginTop="10dp"
                 android:background="@color/color_light_blue"
                 >
                 <TextView
@@ -248,9 +354,13 @@
                     android:layout_height="wrap_content"
                     android:text="What Clients are Saying"
                     android:textSize="16sp"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/toolbar_color"
                     android:gravity="center"
                     />
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/txt_overall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -261,6 +371,7 @@
                     android:id="@+id/txt_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:text="4.5"
                     android:layout_below="@id/txt_overall"
                     android:textSize="16sp"
@@ -269,8 +380,11 @@
                     android:id="@+id/simpleRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:background="@color/color_light_blue"
                     android:rating="3.5"
+                    android:progressTint="@color/btn_yellow"
+                    android:layout_marginBottom="10dp"
                     style="@style/customRatingBar"
                     android:layout_below="@id/txt_rate"/>
                 <androidx.recyclerview.widget.RecyclerView

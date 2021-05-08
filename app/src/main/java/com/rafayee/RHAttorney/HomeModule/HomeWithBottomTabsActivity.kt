@@ -18,15 +18,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.mikhaellopez.circularimageview.CircularImageView
-import com.rafayee.RH.MenuModule.*
+import com.rafayee.RH.Login.View.LoginActivity
+import com.rafayee.RH.MenuModule.ContactUsActivity
+import com.rafayee.RH.MenuModule.NotificationsActivity
+import com.rafayee.RH.MenuModule.PolicyActivity
 import com.rafayee.RH.MenuModule.Presenter.AlertDialogPresenter
+import com.rafayee.RH.MenuModule.TermsAndConditionsActivity
 import com.rafayee.RH.MenuModule.View.IUpdate
 import com.rafayee.RH.MenuModule.View.UpdatePasswordActivity
 import com.rafayee.RHAttorney.HomeModule.FragmentInteractionListener
@@ -41,6 +42,7 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
     private lateinit var navController: NavController
     private lateinit var smoothBottomBar: SmoothBottomBar
     lateinit var imgToggle: ImageView
+    lateinit var imgNotify : ImageView
     lateinit var nav_pic: CircularImageView
     lateinit var img_cancel: ImageView
     lateinit var notify: ImageView
@@ -66,7 +68,7 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
         imgToggle = findViewById(R.id.menu_btn)
         profileIcon = findViewById(R.id.profileIcon)
         mDrawerLayout = findViewById(R.id.drawer_layout)
-        notify = findViewById(R.id.notify)
+       // notify = findViewById(R.id.notify)
         back = findViewById(R.id.back_btn)
         toolbar = findViewById(R.id.toolbar)
 
@@ -74,6 +76,11 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
         alertDialogPresenter.AlertDialogPresenter(this)
         val drawerToggle = ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
+
+       // val child: View = layoutInflater.inflate(R.layout.content_home, null)
+
+        notify =findViewById(R.id.notify)
+
         val actionbar: ActionBar? = supportActionBar
         actionbar?.setHomeAsUpIndicator(R.drawable.meni_white)
         actionbar?.setDisplayHomeAsUpEnabled(true)
@@ -96,7 +103,8 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
         img_cancel.setOnClickListener {
             mDrawerLayout.closeDrawers()
         }
-
+        notify.setOnClickListener(View.OnClickListener {
+            startActivity(Intent(this, NotificationsActivity::class.java))        })
         back.setOnClickListener {
             onBackPressed()
         }
