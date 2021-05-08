@@ -14,6 +14,7 @@ import com.rafayee.RH.Utils.PinInFiled
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rafayee.RH.Forgot.View.ForgotActivity
+import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RH.Login.View.LoginView
 import com.rafayee.RH.Utils.FocusChangeListener
@@ -90,7 +91,7 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
                 Toast.makeText(context,"Enter valid pin",Toast.LENGTH_SHORT).show()
             }else{
                 dialog.dismiss()
-                context.startActivity(Intent(context, LoginActivity::class.java))
+                context.startActivity(Intent(context, HomeWithBottomTabsActivity::class.java))
             }
         }
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)

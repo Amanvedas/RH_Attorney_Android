@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:src="@drawable/arrow_1" />
+
+    <RelativeLayout
+        android:id="@+id/mainLay"
+        android:layout_marginTop="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/toolbar_color"
+            android:elevation="20dp"
+            android:id="@+id/attorneyPic"
+            android:src="@drawable/kid"/>
+<!--
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:visibility="gone"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:src="@drawable/kid"
+            android:id="@+id/attorneyPic1"
+            app:civ_border_width="1dp"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="4dp"
+            app:civ_shadow_gravity="center"
+            app:civ_shadow_color="@color/toolbar_color"
+            app:civ_border_color="@color/toolbar_color"/>
+-->
+
+<!--
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:elevation="10dp"
+            app:civ_border_width="1dp"
+
+            android:outlineSpotShadowColor="@color/design_default_color_primary_dark"
+            app:civ_border_color="@color/toolbar_color"
+            android:src="@drawable/kid"
+            android:id="@+id/attorneyPic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+-->
+
+        <LinearLayout
+            android:layout_marginLeft="11dp"
+            android:layout_toRightOf="@id/attorneyPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginRight="50dp"
+                android:singleLine="true"
+                android:fontFamily="@font/merriweather_bold"
+                android:textColor="@color/toolbar_color"
+                android:textSize="13sp"
+                android:id="@+id/name"
+                android:text="Clint Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:fontFamily="@font/proximanova_alt_bold"
+                android:textSize="12sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:id="@+id/nextAvailable"
+                android:text="Next Available: Nov 18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/proximanova_alt_regular"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:visibility="visible"
+                android:maxLines="2"
+                android:text="9:40pm"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/clock"
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:alpha="0.26"
+        android:id="@+id/horiLine"
+        android:layout_marginLeft="26dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@id/mainLay"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/toolbar_color"/>
+
+    <LinearLayout
+
+        android:layout_marginRight="22dp"
+        android:layout_below="@id/mainLay"
+        android:id="@+id/seeMoreLay"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/down_arrow"/>
+        <TextView
+            android:textColor="@color/toolbar_color"
+            android:layout_marginLeft="14dp"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/proximanova_alt_regular"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See More"
+            />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

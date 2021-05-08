@@ -31,6 +31,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity">
+
+        </activity>
+        <activity android:name=".MenuModule.ProfileActivity"/>
+        <activity android:name="com.rafayee.RH.MenuModule.ContactUsActivity"/>
+        <activity android:name="com.rafayee.RH.MenuModule.NotificationsActivity"/>
+        <activity android:name="com.rafayee.RH.MenuModule.PolicyActivity"/>
+        <activity android:name="com.rafayee.RH.MenuModule.PasswordUpdateSuccessfully"/>
+        <activity android:name="com.rafayee.RH.MenuModule.TermsAndConditionsActivity"/>
+        <activity android:name="com.rafayee.RH.MenuModule.View.UpdatePasswordActivity"/>
+
     </application>
 
 </manifest>

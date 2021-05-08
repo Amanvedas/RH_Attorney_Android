@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragmentModule.HomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp">
+            <TextView
+                android:id="@+id/text_attorney"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#EDF1F3"
+                android:fontFamily="@font/merriweather_bold"
+                android:gravity="start"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:text="Action pending (2)"
+                android:textColor="@color/toolbar_color"
+                android:textSize="16sp" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/siren"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/firstListAttorneys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_attorney"
+                android:paddingBottom="10dp" />
+            <TextView
+                android:id="@+id/text_today"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/firstListAttorneys"
+                android:background="#EDF1F3"
+                android:fontFamily="@font/merriweather_bold"
+                android:gravity="start"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="15dp"
+                android:text="Today consultation (3)"
+                android:textColor="@color/toolbar_color"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8th Feb, 2021"
+                android:textColor="@color/toolbar_color"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/merriweather_regular"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_below="@id/firstListAttorneys"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/today_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_today"
+                android:paddingBottom="10dp" />
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <!-- TODO: Update blank fragment layout -->
+
+</FrameLayout>
