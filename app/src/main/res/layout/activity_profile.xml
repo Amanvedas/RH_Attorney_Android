@@ -192,9 +192,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
+                android:visibility="gone"
                 android:layout_below="@id/txt_biography"
                 android:text="Donald Corky Eby is a partner at Robinson and Henry, as well as the lead attorney for the firm’s civil litigation and real estate practices. \n As a previous real estate company owner and operator, Don has firsthand experience dealing with landlord/tenant issues. Stemming from this background, Don is an experienced adviser and powerful advocate for clients facing any real estate challenge. He helps clients with the purchase or sale of commercial/residential property; real estate financing issues; land development or zoning"
                 />
+            <TextView
+                android:id="@+id/text_discription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="4"
+                android:layout_margin="15dp"
+                android:layout_below="@id/txt_biography"
+                android:text="Donald Corky Eby is a partner at Robinson and Henry, as well as the lead attorney for the firm’s civil litigation and real estate practices. \n As a previous real estate company owner and operator, Don has firsthand experience dealing with landlord/tenant issues. Stemming from this background, Don is an experienced adviser and powerful advocate for clients facing any real estate challenge. He helps clients with the purchase or sale of commercial/residential property; real estate financing issues; land development or zoning"
+                />
+            <LinearLayout
+                android:id="@+id/ly_see_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_below="@id/text_discription"
+                >
+                <ImageView
+                    android:id="@+id/img_down"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_margin="3dp"
+                    android:src="@drawable/down_arrow"
+                    android:backgroundTint="@color/toolbar_color"
+                    />
+                <TextView
+                    android:id="@+id/txt_see_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See More"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/txt_education"
@@ -203,7 +236,7 @@
                 android:text="Education and Bar Admissions"
                 android:textColor="@color/toolbar_color"
                 android:gravity="center"
-                android:layout_below="@id/text_view_show_more"
+                android:layout_below="@id/ly_see_more"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/square_box"
@@ -341,10 +374,34 @@
                 android:layout_below="@id/awards"
                 android:text="Super Lawyers Rising Star 2015, 2016, 2017 \n 5280 Top Lawyer in Denver Real Estate 2017 Law Week Colorado – Up and Coming Lawyers 2015"
                 />
+            <LinearLayout
+                android:id="@+id/ly_see_more2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_below="@id/rl_award_dot2"
+                >
+                <ImageView
+                    android:id="@+id/img_down1"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_margin="3dp"
+                    android:src="@drawable/down_arrow"
+                    android:backgroundTint="@color/toolbar_color"
+                    />
+                <TextView
+                    android:id="@+id/txt_see_more1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See More"
+                    />
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/rl_award_dot2"
+                android:layout_below="@id/ly_see_more2"
                 android:layout_marginTop="10dp"
                 android:background="@color/color_light_blue"
                 >
@@ -360,42 +417,147 @@
                     android:gravity="center"
                     />
                 <TextView
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="12dp"
                     android:id="@+id/txt_overall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Overall"
+                    android:fontFamily="@font/raleway_bold"
                     android:layout_below="@id/txt_client_says"
                     />
                 <TextView
                     android:id="@+id/txt_rate"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="12dp"
                     android:text="4.5"
+                    android:fontFamily="@font/proximanova_alt_semibold"
                     android:layout_below="@id/txt_overall"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     />
                 <RatingBar
                     android:id="@+id/simpleRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/color_light_blue"
+                    android:background="#00000000"
                     android:rating="3.5"
-                    android:progressTint="@color/btn_yellow"
-                    android:layout_marginBottom="10dp"
-                    style="@style/customRatingBar"
+                    android:layout_marginLeft="10dp"
+                    style="?android:attr/ratingBarStyleIndicator"                    android:progressTint="@color/btn_yellow"
                     android:layout_below="@id/txt_rate"/>
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rating_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/simpleRatingBar"
                     />
+
+                <RelativeLayout
+                    android:id="@+id/rl_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_below="@id/simpleRatingBar"
+                    >
+                    <RatingBar
+                        android:id="@+id/rating_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:rating="3.5"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:progressTint="@color/btn_yellow"
+                        android:layout_marginBottom="10dp"
+                        style="@style/customRatingBar"
+                        />
+                    <TextView
+                        android:id="@+id/txt_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rating_bar"
+                        android:maxLines="2"
+                        android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et"
+                        />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_date1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@id/rl_comment"
+                    android:text="Nov 14, 2020"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/rl_comment1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_below="@id/txt_date1"
+                    >
+                    <RatingBar
+                        android:id="@+id/rating_bar1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00000000"
+                        android:rating="3.5"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:progressTint="@color/btn_yellow"
+                        android:layout_marginBottom="10dp"
+                        style="@style/customRatingBar"
+                        />
+                    <TextView
+                        android:id="@+id/txt_review1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rating_bar1"
+                        android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et"
+                       android:maxLines="3"
+                        />
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"                    android:layout_below="@id/rl_comment1"
+                    android:text="Nov 14, 2020"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/ly_see_more3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:layout_marginBottom="30dp"
+                    android:layout_below="@id/txt_date"
+                    >
+                    <ImageView
+                        android:id="@+id/img_down2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_margin="3dp"
+                        android:src="@drawable/down_arrow"
+                        android:backgroundTint="@color/toolbar_color"
+                        />
+                    <TextView
+                        android:id="@+id/txt_see_more2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="See More"
+                        />
+                </LinearLayout>
+
+
+
             </RelativeLayout>
 
         </RelativeLayout>
-
 
     </ScrollView>
 

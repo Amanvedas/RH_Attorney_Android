@@ -25,21 +25,19 @@
         <activity android:name=".MainActivity" />
 
         <activity android:name="com.rafayee.RH.SplashScreen.SplashScreen">
-<!--
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity">
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 -->
-        </activity>
-        <activity android:name="com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
         <activity android:name=".MenuModule.ProfileActivity">
 

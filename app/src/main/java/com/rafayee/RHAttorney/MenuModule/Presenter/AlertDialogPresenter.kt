@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
+import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RH.MenuModule.View.IUpdate
 import com.rafayee.RHAttorney.MainActivity
 import com.rafayee.RHAttorney.R
@@ -45,7 +46,7 @@ class AlertDialogPresenter {
         imgSignout.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
             iUpdate.finishView()
-            context.startActivity(Intent(context, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
+            context.startActivity(Intent(context, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
 
         })
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -85,6 +86,29 @@ class AlertDialogPresenter {
             dialog.dismiss()
         })
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+    fun edtProfileAlert(){
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.message_to_layout)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        val imgSend: ImageView = dialog.findViewById(R.id.img_send)
+        val imgCancel: ImageView = dialog.findViewById(R.id.img_cancel)
+
+        imgSend.setOnClickListener(View.OnClickListener {
+            Toast.makeText(
+                context,
+                "Profile Updated Successfully",
+                Toast.LENGTH_SHORT
+            ).show()
+            dialog.dismiss()
+        })
+        imgCancel.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+      //  dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
 

@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.rafayee.RH.Login.View.LoginActivity
@@ -42,7 +43,6 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
     private lateinit var navController: NavController
     private lateinit var smoothBottomBar: SmoothBottomBar
     lateinit var imgToggle: ImageView
-    lateinit var imgNotify : ImageView
     lateinit var nav_pic: CircularImageView
     lateinit var img_cancel: ImageView
     lateinit var notify: ImageView
@@ -56,6 +56,7 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
     lateinit var profileIcon: CircularImageView
     private var doubleBackToExitPressedOnce = false
     lateinit var back: ImageView
+    lateinit var ratingListView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
