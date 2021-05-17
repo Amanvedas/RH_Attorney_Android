@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_blue"
+            android:padding="30dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="60dp">
+
+            <pl.bclogic.pulsator4droid.library.PulsatorLayout
+                android:id="@+id/pulsator"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                app:pulse_count="4"
+                app:pulse_duration="2800"
+                app:pulse_repeat="0"
+                app:pulse_color="@color/toolbar_color"
+                app:pulse_startFromScratch="true"
+                app:pulse_interpolator="Decelerate">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/fone"
+                    android:elevation="10dp"
+                    app:civ_border_width="2dp"
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="5dp"
+                    app:civ_shadow_gravity="center"
+                    app:civ_shadow_color="@color/toolbar_color"
+                    app:civ_border_color="@color/toolbar_color"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="40dp"
+                    android:id="@+id/userPic"
+                    tools:targetApi="lollipop" />
+            </pl.bclogic.pulsator4droid.library.PulsatorLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="16dp"
+                android:fontFamily="@font/merriweather_regular"
+                android:layout_gravity="center"
+                android:textColor="@color/toolbar_color"
+                android:text="Donald Edy"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:textSize="12sp"
+                android:fontFamily="@font/proximanova_alt_regular"
+                android:textColor="@color/toolbar_color"
+                android:text="Managing Partner"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="7dp"
+                android:textSize="12sp"
+                android:textColor="@color/toolbar_color"
+                android:fontFamily="@font/proximanova_alt_regular"
+                android:text="REAL ESTATE LITIGATION &amp; PROBATE"/>
+
+            <TextView
+                android:id="@+id/connect"
+                android:layout_width="wrap_content"
+                android:text="Connecting...."
+                android:textColor="@color/black"
+                android:textAllCaps="false"
+                android:layout_marginTop="100dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/raleway_medium"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>
