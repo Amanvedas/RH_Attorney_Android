@@ -2,6 +2,7 @@ package com.rafayee.RH.Forgot.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import com.rafayee.RH.Forgot.Presenter.ForgotPresenter
 
@@ -9,6 +10,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rafayee.RH.Utils.FocusChangeListener
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 
 
 class ForgotActivity : AppCompatActivity() {
@@ -23,14 +25,20 @@ class ForgotActivity : AppCompatActivity() {
         setContentView(R.layout.activity_forgot)
         supportActionBar?.hide()
         initVar()
+        val bundle: Bundle? = intent.extras
+        var  string: String? = intent.getStringExtra("update")
         presenter= ForgotPresenter()
         presenter.forgotInstance(this,email)
 
         send.setOnClickListener {
-            presenter.validations()
+            Log.e("afdaf","fff "+string)
+
+            string?.let { it1 -> presenter.validations(it1) }
         }
         back.setOnClickListener { onBackPressed() }
         FocusChangeListener(this,cardEmail, email,30,30,65,0,30,30,65,0)
+        RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
+
     }
 
     fun initVar(){
@@ -38,5 +46,6 @@ class ForgotActivity : AppCompatActivity() {
         send=findViewById(R.id.send)
         email=findViewById(R.id.email)
         cardEmail = findViewById(R.id.cardEmail)
+
     }
 }

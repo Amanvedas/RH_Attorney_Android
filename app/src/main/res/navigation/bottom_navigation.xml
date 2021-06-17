@@ -12,4 +12,13 @@
         android:id="@+id/second_fragment"
         android:name="com.rafayee.RHAttorney.HomeFragmentModule.UsersFragment"
         tools:layout="@layout/fragment_users" />
+    <fragment
+        android:id="@+id/thired_fragment"
+        android:name="com.rafayee.RHAttorney.AppointmentInfoModule.ClientInfoFragment"
+        tools:layout="@layout/fragment_client_info" />
+    <fragment
+        android:id="@+id/client_info"
+        android:name="com.rafayee.RHAttorney.ParalegalModule.ClientInfoParalegalFragment"
+        tools:layout="@layout/fragment_client_info_paralegal" />
+
 </navigation>

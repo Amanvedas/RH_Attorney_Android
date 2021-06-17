@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.rafayee.RHAttorney.AppointmentInfoModule.MeetingEndedActivity
+import com.rafayee.RHAttorney.AppointmentInfoModule.NavigateAwayActivity
 import com.rafayee.RHAttorney.MainActivity
 import com.rafayee.RHAttorney.R
 
@@ -25,7 +27,7 @@ class VideoActivity: AppCompatActivity() {
         localVideoActionFab = findViewById(R.id.local_video_action_fab)
         muteActionFab = findViewById(R.id.mute_action_fab)
 
-        connectActionFab.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
+        connectActionFab.setOnClickListener { startActivity(Intent(this, NavigateAwayActivity::class.java)) }
     }
 
     override fun onBackPressed() {

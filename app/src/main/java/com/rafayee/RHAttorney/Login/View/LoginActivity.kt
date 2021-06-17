@@ -5,43 +5,58 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
+import android.provider.Settings
 import android.util.Log
-import android.widget.*
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.core.app.ActivityCompat
 import com.facebook.CallbackManager
 import com.facebook.login.widget.LoginButton
-import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import com.rafayee.RH.Forgot.View.ForgotActivity
-
 import com.rafayee.RH.Login.Presenter.LoginPresenter
 import com.rafayee.RH.Utils.FocusChangeListener
+import com.rafayee.RHAttorney.MyService
 import com.rafayee.RHAttorney.R
-import java.util.*
+import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 
-class LoginActivity : AppCompatActivity(),LoginView {
+class LoginActivity : AppCompatActivity(),LoginView   {
     lateinit var forgot: TextView
     lateinit var back: ImageView
     lateinit var login: ImageView
     lateinit var email: TextInputEditText
     lateinit var pwd: TextInputEditText
+    lateinit var btnRememberMe : SwitchCompat
     lateinit var googleBtn: ImageView
     lateinit var fingerPrint: ImageView
     lateinit var presenter: LoginPresenter
     lateinit var apple: ImageView
     lateinit var faceId: ImageView
+    lateinit var service : MyService
+    lateinit var id : String
     lateinit var cardEmail: TextInputLayout
     lateinit var cardPwd: TextInputLayout
-
+    var filename = "Valustoringfile"
+    var SP: SharedPreferences? = null
     var firebaseAuth: FirebaseAuth? = null
     lateinit var loginButton: LoginButton
     lateinit var callbackManager: CallbackManager
@@ -70,11 +85,38 @@ class LoginActivity : AppCompatActivity(),LoginView {
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
         initVar()
+
+/*
+        FirebaseInstanceId.getInstance().getInstanceId()
+            .addOnCompleteListener(object : WebDialog.OnCompleteListener<InstanceIdResult?>() {
+                fun onComplete(task: Task<InstanceIdResult>) {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "getInstanceId failed", task.getException())
+                        return
+                    }
+
+                    // Get new Instance ID token
+                    val token: String = task.getResult().getToken()
+                }
+            })
+*/
         callbackManager = CallbackManager.Factory.create()
         presenter = LoginPresenter()
-        presenter.LoginInstance(this,this@LoginActivity, email, pwd)
+         RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
 
+        presenter.LoginInstance(this,this@LoginActivity, email, pwd,id,btnRememberMe)
 
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                print(task.result?.token)
+                Log.e("fire","token:: "+task.result?.token)
+            }
+            else{
+                print(task.exception?.message)
+                Log.e("fire","error:: "+task.exception?.message)
+
+            }
+        }
         FocusChangeListener(this, cardEmail, email, 0, 0, 10, 5, 5, 5, 10, 5)
         FocusChangeListener(this, cardPwd, pwd, 0, 0, 10, 5, 5, 5, 10, 5)
 
@@ -93,7 +135,7 @@ class LoginActivity : AppCompatActivity(),LoginView {
           // Change //startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
         }*/
         forgot.setOnClickListener {
-            startActivity(Intent(this, ForgotActivity::class.java))
+            startActivity(Intent(this, ForgotActivity::class.java).putExtra("update","forgot"))
         }
         back.setOnClickListener {
             onBackPressed()
@@ -112,7 +154,55 @@ class LoginActivity : AppCompatActivity(),LoginView {
         faceId = findViewById(R.id.face_Id)
         //signUpText = findViewById(R.id.signUpText)
         cardEmail = findViewById(R.id.cardEmail)
+        btnRememberMe = findViewById(R.id.remember_switch)
         cardPwd = findViewById(R.id.cardPwd)
+
+        id  = Settings.Secure.getString(contentResolver,Settings.Secure.ANDROID_ID)
+        Log.e("idd","is:: "+id)
+
+        btnRememberMe.setOnClickListener(View.OnClickListener {
+            if (btnRememberMe.isChecked){
+                SP = getSharedPreferences(filename, 0)
+                val getname: String? = SP!!.getString("key1", "")
+                val getpass: String? = SP!!.getString("key2", "")
+
+                email.setText(getname)
+                pwd.setText(getpass)
+            }
+
+        })
+
+
+     //   val token = FirebaseInstanceId.getInstance().token
+
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(object : OnCompleteListener<InstanceIdResult?> {
+                override fun onComplete(@NonNull task: Task<InstanceIdResult?>) {
+                    if (!task.isSuccessful()) {
+                        Log.e("TAG", "getInstanceId failed"+task.getException())
+                        return
+                    }
+
+                    // Get new Instance ID token
+                    val token: String = task.getResult()!!.getToken()
+                    Log.e("firebaseTokenInLogin", ":= "+token)
+
+                    // Log and toast
+                    val msg = getString(R.string.messenger_send_button_text, token)
+                    Log.e("lldld", ":= "+msg)
+                    Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+                }
+            })
+
+/*
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if(it.isComplete){
+               var firebaseToken : String = it.result.toString()
+                Log.e("tokennn","is:: "+id+", "+firebaseToken)
+
+            }
+        }
+*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

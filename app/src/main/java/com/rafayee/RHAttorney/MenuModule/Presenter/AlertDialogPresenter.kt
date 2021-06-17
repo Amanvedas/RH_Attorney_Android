@@ -8,15 +8,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RH.MenuModule.View.IUpdate
+import com.rafayee.RHAttorney.Login.LoginResponseController
 import com.rafayee.RHAttorney.MainActivity
 import com.rafayee.RHAttorney.R
 
@@ -45,13 +43,50 @@ class AlertDialogPresenter {
         })
         imgSignout.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
-            iUpdate.finishView()
-            context.startActivity(Intent(context, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
+          //  iUpdate.finishView()
+            context.startActivity(Intent(context, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
 
         })
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
+
+    fun filterAlertDialog() {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.filter_dialog_layout)
+        // dialog.setTitle("Title...")
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        val imgCanel: ImageView = dialog.findViewById(R.id.img_cancel)
+        imgCanel.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
+
+    fun calAlertDialog(context: Context) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.calender_alert_layout)
+        // dialog.setTitle("Title...")
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        val imgCanel: LinearLayout = dialog.findViewById(R.id.lay_back)
+        val imgDone: ImageView = dialog.findViewById(R.id.img_done)
+        imgCanel.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+        })
+        imgDone.setOnClickListener(View.OnClickListener {
+            dialog.dismiss()
+           // iUpdate.finishView()
+            context.startActivity(Intent(context, HomeWithBottomTabsActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
+
+        })
+        dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.show()
+    }
+
     fun logoutAlertDialog() {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.logout_layout)
@@ -94,7 +129,7 @@ class AlertDialogPresenter {
         dialog.setContentView(R.layout.message_to_layout)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
-        val imgSend: ImageView = dialog.findViewById(R.id.img_send)
+        val imgSend: Button = dialog.findViewById(R.id.img_send)
         val imgCancel: ImageView = dialog.findViewById(R.id.img_cancel)
 
         imgSend.setOnClickListener(View.OnClickListener {

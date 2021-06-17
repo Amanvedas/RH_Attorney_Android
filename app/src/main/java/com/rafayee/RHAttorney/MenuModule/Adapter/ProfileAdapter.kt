@@ -10,15 +10,15 @@ import com.rafayee.RHAttorney.R
 
 class ProfileAdapter (private var context: Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {
     lateinit var activity: Context
+     var arrayList: ArrayList<String> = ArrayList()
 
     class ViewHolder (v: View): RecyclerView.ViewHolder(v)  {
 
     }
 
-    fun ProfileAdapter(
-        context: Context,
-    ) {
+    fun ProfileAdapter(context: Context, arrayList: ArrayList<String>) {
         this.activity = context
+        this.arrayList = arrayList
 
     }
 

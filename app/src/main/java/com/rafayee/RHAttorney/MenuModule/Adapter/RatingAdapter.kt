@@ -13,7 +13,7 @@ class RatingAdapter(private var context: Context) : RecyclerView.Adapter<RatingA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatingAdapter.ViewHolder {
-        val layout = LayoutInflater.from(parent.context).inflate(R.layout.profile_recycle_item, parent)
+        val layout = LayoutInflater.from(parent.context).inflate(R.layout.rating_item_view, parent)
        return ViewHolder(layout)
     }
 

@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -49,14 +50,6 @@ public class RetrofitCallbacks {
     public void fillcontext(Context context) {
         this.context = context;
     }
-
-
-
-
-
-
-
-
 
     public void ApiCallbacksGetAvailableTimings(final Context context, String EndUrl,JsonObject jsonobj, final String from) {
 
@@ -131,6 +124,53 @@ public class RetrofitCallbacks {
             }
         });
     }
+
+    public void apiCallBacks(String strFrom,Call<ResponseBody> call){
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String responseData = new String(response.body().bytes());
+                    Log.e("response","rerr"+strFrom);
+
+                    serverResponseInterface.successCallBack(responseData,strFrom);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("response","ee "+t.getMessage());
+
+            }
+        });
+
+    }
+
+
+
+    public void OTPApiCall(Context context,JsonObject jsonObject){
+
+        this.context = context;
+        ServerApiCollection loginConection = getClient().create(ServerApiCollection.class);
+        Call<ResponseBody> call = loginConection.LoginApi(jsonObject);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.e("response","re"+response.message());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("response","ee "+t.getMessage());
+
+            }
+        });
+
+    }
+
 
     public void ApiCallbacksGet(final Context context, String EndUrl, final String from) {
         Log.e("sas",from);

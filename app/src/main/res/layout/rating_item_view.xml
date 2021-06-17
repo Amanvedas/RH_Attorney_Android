@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/color_light_blue"
+    >
     <RelativeLayout
+        android:id="@+id/rl_comment1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         >
         <RatingBar
-            android:id="@+id/rating_bar"
+            android:id="@+id/rating_bar1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@color/color_light_blue"
+            android:background="#00000000"
             android:rating="3.5"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:progressTint="@color/btn_yellow"
             android:layout_marginBottom="10dp"
             style="@style/customRatingBar"
-           />
+            />
         <TextView
-            android:id="@+id/txt_review"
+            android:id="@+id/txt_review1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rating_bar"
+            android:layout_below="@id/rating_bar1"
+            android:textColor="@color/black"
+            android:fontFamily="@font/proximanova_alt_regular"
             android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et"
+            android:maxLines="3"
+            />
+        <TextView
+            android:id="@+id/txt_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/txt_review1"
+            android:text="Nov 14, 2020"
             />
 
     </RelativeLayout>

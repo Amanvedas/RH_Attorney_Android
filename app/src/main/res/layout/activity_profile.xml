@@ -105,8 +105,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="125dp"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="33dp"
                     android:layout_marginRight="10dp"
                     android:elevation="30dp">
 
@@ -114,14 +114,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp">
 
                         <TextView
                             android:id="@+id/txt_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Donald Eby"
+                            android:fontFamily="@font/merriweather_regular"
                             android:textColor="@color/toolbar_color" />
 
                         <TextView
@@ -130,6 +131,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txt_name"
                             android:text="Managing Partner"
+                            android:fontFamily="@font/proximanova_alt_regular"
                             android:textColor="@color/toolbar_color" />
 
                         <TextView
@@ -137,7 +139,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/txt_job"
+                            android:singleLine="true"
+                            android:ellipsize="end"
                             android:text="REAL ESTATE, LITIGATION AND PROBATE"
+                            android:fontFamily="@font/proximanova_alt_regular"
                             android:textColor="@color/toolbar_color"
                             android:textSize="12sp" />
                     </RelativeLayout>
@@ -152,7 +157,7 @@
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 app:civ_border_color="@color/toolbar_color"
                 android:backgroundTint="@color/toolbar_color"
                 android:src="@drawable/pic3" />
@@ -172,8 +177,8 @@
                 android:text="Profile Video"
                 android:textColor="@color/toolbar_color"
                 android:layout_toRightOf="@id/img_youtube"
-                android:layout_marginTop="125dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginTop="122dp"
+                android:layout_marginLeft="5dp"
                 />
             <TextView
                 android:id="@+id/txt_biography"
@@ -182,6 +187,7 @@
                 android:text="Biography"
                 android:textColor="@color/toolbar_color"
                 android:gravity="center"
+                android:fontFamily="@font/merriweather_regular"
                 android:layout_below="@id/txt_video"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="15dp"
@@ -202,6 +208,8 @@
                 android:layout_height="wrap_content"
                 android:maxLines="4"
                 android:layout_margin="15dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/proximanova_alt_regular"
                 android:layout_below="@id/txt_biography"
                 android:text="Donald Corky Eby is a partner at Robinson and Henry, as well as the lead attorney for the firm’s civil litigation and real estate practices. \n As a previous real estate company owner and operator, Don has firsthand experience dealing with landlord/tenant issues. Stemming from this background, Don is an experienced adviser and powerful advocate for clients facing any real estate challenge. He helps clients with the purchase or sale of commercial/residential property; real estate financing issues; land development or zoning"
                 />
@@ -211,13 +219,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_below="@id/text_discription"
                 >
                 <ImageView
                     android:id="@+id/img_down"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_margin="3dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_margin="2dp"
                     android:src="@drawable/down_arrow"
                     android:backgroundTint="@color/toolbar_color"
                     />
@@ -226,6 +235,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See More"
+                    android:textColor="@color/toolbar_color"
+                    android:fontFamily="@font/proximanova_alt_regular"
                     />
             </LinearLayout>
 
@@ -237,10 +248,22 @@
                 android:textColor="@color/toolbar_color"
                 android:gravity="center"
                 android:layout_below="@id/ly_see_more"
+                android:fontFamily="@font/merriweather_regular"
                 android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/square_box"
                 />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/education_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginRight="30dp"
+                android:layout_below="@id/txt_education"/>
+
             <RelativeLayout
                 android:id="@+id/rl_dot"
                 android:layout_width="match_parent"
@@ -263,7 +286,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
                     android:visibility="visible"
+                    android:fontFamily="@font/proximanova_alt_regular"
                     android:layout_toRightOf="@id/txt_dot"
                     android:text="University of Denver Sturm College of Law Bachelor of Science"
                     />
@@ -290,7 +315,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/black"
                     android:visibility="visible"
+                    android:fontFamily="@font/proximanova_alt_regular"
                     android:text="Admissions: Colorado Bar, 2013; U.S. District Court – Colorado; U.S. Court of Appeals – 10th Circuit"
                     android:layout_toRightOf="@id/txt_dot1"
                     />
@@ -307,6 +334,7 @@
                 android:layout_below="@id/rl_dot1"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
+                android:fontFamily="@font/merriweather_regular"
                 android:background="@drawable/square_box"
                 />
             <RelativeLayout
@@ -333,6 +361,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:visibility="visible"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/proximanova_alt_regular"
                     android:text="Super Lawyers Rising Star 2015, 2016, 2017 "
                     android:layout_toRightOf="@id/txt_award_dot1"
                     />
@@ -359,7 +389,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/proximanova_alt_regular"
                     android:visibility="visible"
+                    android:textColor="@color/black"
                     android:text="5280 Top Lawyer in Denver Real Estate 2017 Law Week Colorado – Up and Coming Lawyers 2015"
                     android:layout_toRightOf="@id/txt_award_dot2"
                     />
@@ -372,6 +404,7 @@
                 android:layout_margin="15dp"
                 android:visibility="gone"
                 android:layout_below="@id/awards"
+                android:textColor="@color/black"
                 android:text="Super Lawyers Rising Star 2015, 2016, 2017 \n 5280 Top Lawyer in Denver Real Estate 2017 Law Week Colorado – Up and Coming Lawyers 2015"
                 />
             <LinearLayout
@@ -379,14 +412,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginLeft="10dp"
                 android:padding="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_below="@id/rl_award_dot2"
                 >
                 <ImageView
                     android:id="@+id/img_down1"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_margin="3dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:layout_margin="2dp"
                     android:src="@drawable/down_arrow"
                     android:backgroundTint="@color/toolbar_color"
                     />
@@ -395,6 +430,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="See More"
+                    android:textColor="@color/toolbar_color"
+                    android:fontFamily="@font/proximanova_alt_regular"
                     />
             </LinearLayout>
 
@@ -411,8 +448,8 @@
                     android:layout_height="wrap_content"
                     android:text="What Clients are Saying"
                     android:textSize="16sp"
-                    android:fontFamily="@font/merriweather_regular"
-                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/merriweather_bold"
+                    android:layout_marginTop="20dp"
                     android:textColor="@color/toolbar_color"
                     android:gravity="center"
                     />
@@ -422,7 +459,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Overall"
-                    android:fontFamily="@font/raleway_bold"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/raleway_semibold"
                     android:layout_below="@id/txt_client_says"
                     />
                 <TextView
@@ -431,19 +470,25 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="12dp"
                     android:text="4.5"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/proximanova_alt_semibold"
                     android:layout_below="@id/txt_overall"
                     android:textSize="18sp"
                     />
                 <RatingBar
                     android:id="@+id/simpleRatingBar"
+                    style="@style/CustomRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:rating="3.5"
-                    android:layout_marginLeft="10dp"
-                    style="?android:attr/ratingBarStyleIndicator"                    android:progressTint="@color/btn_yellow"
-                    android:layout_below="@id/txt_rate"/>
+                    android:numStars="5"
+                    android:progress="4"
+                    android:layout_marginTop="-20dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_below="@id/txt_rate"
+                    android:stepSize="0.01"
+                    android:visibility="visible" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rating_list"
                     android:layout_width="match_parent"
@@ -455,7 +500,9 @@
                     android:id="@+id/rl_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_below="@id/simpleRatingBar"
                     >
                     <RatingBar
@@ -476,6 +523,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rating_bar"
                         android:maxLines="2"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/proximanova_alt_regular"
                         android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et"
                         />
 
@@ -514,6 +563,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/rating_bar1"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/proximanova_alt_regular"
                         android:text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et"
                        android:maxLines="3"
                         />
@@ -534,13 +585,14 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="5dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="30dp"
                     android:layout_below="@id/txt_date"
                     >
                     <ImageView
                         android:id="@+id/img_down2"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:layout_margin="3dp"
                         android:src="@drawable/down_arrow"
                         android:backgroundTint="@color/toolbar_color"
@@ -550,6 +602,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="See More"
+                        android:textColor="@color/toolbar_color"
+                        android:fontFamily="@font/proximanova_alt_regular"
                         />
                 </LinearLayout>
 

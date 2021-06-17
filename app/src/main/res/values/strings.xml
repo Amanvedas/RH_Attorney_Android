@@ -7,6 +7,8 @@
     <string name="edittext_hint"><font size="15">Name</font></string>
 
     <string name="edit_email_hint"><font size="15">Email</font></string>
+    <string name="token"><font size="15">msg_token_fmt</font></string>
+
     <string name="permissions_needed">Camera and Microphone permissions needed. Please allow in App Settings for additional functionality.</string>
 
 

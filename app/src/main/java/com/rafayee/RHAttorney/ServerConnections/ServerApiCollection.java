@@ -20,6 +20,22 @@ public interface ServerApiCollection {
 
     @POST
     Call<ResponseBody> PostDataFromServer(@Url String url, @Body JsonObject registerObj);
+    @POST("attorneys/login")
+    Call<ResponseBody> LoginApi(@Body JsonObject loginObject );
+    @POST("attorneys/forgotpassword")
+    Call<ResponseBody> ForgotApi(@Body JsonObject loginObject );
+
+    @POST("attorneys/verify")
+    Call<ResponseBody> verifyApi(@Body JsonObject loginObject );
+
+    @POST("attorneys/reset_password")
+    Call<ResponseBody> resetPassword(@Body JsonObject loginObject );
+
+    @POST("attorneys/changepassword")
+    Call<ResponseBody> updatePassword(@Body JsonObject loginObject );
+
+    @POST("attorneys/signout")
+    Call<ResponseBody> signOutApi(@Body JsonObject logout);
 
     @GET
     Call<ResponseBody> fetchAttorneyList(@Url String url);

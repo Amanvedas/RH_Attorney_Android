@@ -5,10 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AppointmentInfoModule.InviteOtherPeopleActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <RelativeLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,15 +24,15 @@
                 android:layout_marginLeft="5dp"
                 android:padding="18dp"
                 android:src="@drawable/back_white" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Invite Other People"
-                android:textSize="16sp"
                 android:layout_centerInParent="true"
-                android:textColor="@color/white"
                 android:fontFamily="@font/merriweather_regular"
-                />
+                android:text="Invite Other People"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -41,165 +42,187 @@
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Skip"
                     android:fontFamily="@font/merriweather_regular"
+                    android:text="Skip"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </LinearLayout>
         </RelativeLayout>
-        <RelativeLayout
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
-            >
-            <TextView
-                android:id="@+id/txt_title_url"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/toolbar_color"
-                android:text="Invitation URL"
-                android:layout_margin="15dp"
-                />
-            <TextView
-                android:id="@+id/txt_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_title_url"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="https://xd.adobe.com/view/bf14d98e-0f1f-48a0-b56b-18d0df8f1ccd-ea47/"
-                android:background="@drawable/blue_line_boarder"
-                android:fontFamily="@font/merriweather_bold"
-                android:padding="15dp"
-                android:singleLine="true"
-                />
-            <TextView
-                android:id="@+id/txt_invite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_url"
-                android:text="Invite people to join your meeting"
-                android:fontFamily="@font/merriweather_bold"
-                android:singleLine="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="25dp"
-                android:textSize="14sp"
-                android:textColor="@color/toolbar_color"
-                />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar">
+
             <RelativeLayout
-                android:id="@+id/rl_details"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_light_blue"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_toLeftOf="@id/img_add"
-                android:layout_below="@id/txt_invite"
-                >
-                <EditText
-                    android:id="@+id/edit_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/edittext_hint"
-                    android:textColorHint="@color/toolbar_color"
-                    />
-                <EditText
-                    android:id="@+id/edit_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/edit_email_hint"
-                    android:layout_below="@id/edit_name"
-                    android:textColorHint="@color/toolbar_color"
-                    />
+                android:layout_height="match_parent">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lay_edt_name"
+                <TextView
+                    android:id="@+id/txt_title_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="Invitation URL"
+                    android:fontFamily="@font/merriweather_bold"
+                    android:textColor="@color/toolbar_color" />
+
+                <TextView
+                    android:id="@+id/txt_url"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_light_blue"
-                    android:visibility="gone"
-                    android:hint="Name"
-                    android:layout_margin="10dp"
-                    app:hintTextColor="@color/toolbar_color"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_name"
-                        android:layout_width="match_parent"
-                        android:background="@color/color_light_blue"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/lay_edt_email"
+                    android:layout_below="@id/txt_title_url"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/blue_line_boarder"
+                    android:fontFamily="@font/merriweather_bold"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:text="https://xd.adobe.com/view/bf14d98e-0f1f-48a0-b56b-18d0df8f1ccd-ea47/" />
+
+                <TextView
+                    android:id="@+id/txt_invite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_light_blue"
-                    android:hint="Email"
-                    android:visibility="gone"
-                    android:layout_below="@id/lay_edt_name"
-                    app:hintTextColor="@color/toolbar_color"
-                    >
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edt_email"
-                        android:layout_width="match_parent"
-                        android:background="@color/color_light_blue"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        />
+                    android:layout_below="@id/txt_url"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="25dp"
+                    android:fontFamily="@font/merriweather_bold"
+                    android:singleLine="true"
+                    android:text="Invite people to join your meeting"
+                    android:textColor="@color/toolbar_color"
+                    android:textSize="14sp" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_invite"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toLeftOf="@id/img_add"
+                    android:background="@color/color_light_blue">
+
+                    <EditText
+                        android:id="@+id/edit_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/merriweather_bold"
+                        android:hint="@string/edittext_hint"
+                        android:singleLine="true"
+                        android:textColor="@color/toolbar_color"
+                        android:textColorHint="@color/toolbar_color"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/edit_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/edit_name"
+                        android:layout_margin="3dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/merriweather_bold"
+                        android:hint="@string/edit_email_hint"
+                        android:singleLine="true"
+                        android:textColor="@color/toolbar_color"
+                        android:textColorHint="@color/toolbar_color"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lay_edt_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@color/color_light_blue"
+                        android:hint="Name"
+                        android:visibility="gone"
+                        app:hintTextColor="@color/toolbar_color">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/color_light_blue"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/lay_edt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/lay_edt_name"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@color/color_light_blue"
+                        android:hint="Email"
+                        android:visibility="gone"
+                        app:hintTextColor="@color/toolbar_color">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/color_light_blue"
+                            android:singleLine="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/img_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_invite"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="53dp"
+                    android:layout_marginRight="15dp"
+                    android:padding="5dp"
+                    android:src="@drawable/add" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/details_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rl_details"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:nestedScrollingEnabled="false">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/img_add"
-                android:layout_width="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_height="wrap_content"
-                android:src="@drawable/add"
-                android:layout_marginTop="65dp"
-                android:padding="5dp"
-                android:layout_marginRight="15dp"
-                android:layout_below="@id/txt_invite"
-                android:layout_marginLeft="15dp"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/details_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/rl_details"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
-                >
+            >
 
-            </androidx.recyclerview.widget.RecyclerView>
+        </ScrollView>
 
-        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            >
+            android:background="@color/white">
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_share"
                 android:layout_width="180dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Share the Link"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_round_yellow"
-                />
+                android:fontFamily="@font/merriweather_bold"
+                android:text="Share the Link"
+                android:textAllCaps="false" />
 
         </RelativeLayout>
 

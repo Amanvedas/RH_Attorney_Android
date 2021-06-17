@@ -13,6 +13,7 @@ import com.rafayee.RH.MenuModule.PasswordUpdateSuccessfully
 import com.rafayee.RH.MenuModule.Presenter.UpdatePasswordPresenter
 import com.rafayee.RH.Utils.FocusChangeListener
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 
 class UpdatePasswordActivity : AppCompatActivity(),IUpdate {
     lateinit var presenter : UpdatePasswordPresenter
@@ -36,7 +37,8 @@ class UpdatePasswordActivity : AppCompatActivity(),IUpdate {
 
     fun clickEvents(){
         txtForgot.setOnClickListener {
-            startActivity(Intent(this, ForgotActivity::class.java))
+            startActivity(Intent(this, ForgotActivity::class.java)
+                .putExtra("update","update"))
         }
         imgDone.setOnClickListener {
             presenter.validations()
@@ -56,6 +58,7 @@ class UpdatePasswordActivity : AppCompatActivity(),IUpdate {
         cardPwd = findViewById(R.id.cardPwd)
         presenter = UpdatePasswordPresenter()
         presenter.UpdatePasswordPresenter(this,this,pwdOld,pwdNew,pwdConform)
+        RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
 
         FocusChangeListener(this,cardOldPwd, pwdOld,0,0,10,5,2,2,10,5)
         FocusChangeListener(this,cardNewPwd, pwdNew,0,0,10,5,2,2,10,5)

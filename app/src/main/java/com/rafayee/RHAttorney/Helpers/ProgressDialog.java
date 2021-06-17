@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.Window;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ public class ProgressDialog {
             dialog.show();
         }
     }
+
     public void hideProgress() {
         //dialog.dismiss();
         if (dialog != null) {
@@ -43,4 +46,20 @@ public class ProgressDialog {
             dialog = null;
         }
     }
+    public boolean checkNetwork(Context context) {
+        boolean wifiAvailable = false;
+        boolean mobileAvailable = false;
+        ConnectivityManager conManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] networkInfo = conManager.getAllNetworkInfo();
+        for (NetworkInfo netInfo : networkInfo) {
+            if (netInfo.getTypeName().equalsIgnoreCase("WIFI"))
+                if (netInfo.isConnected())
+                    wifiAvailable = true;
+            if (netInfo.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (netInfo.isConnected())
+                    mobileAvailable = true;
+        }
+        return wifiAvailable || mobileAvailable;
+    }
+
 }

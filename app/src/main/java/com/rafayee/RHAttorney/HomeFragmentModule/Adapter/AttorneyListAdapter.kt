@@ -8,9 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.rafayee.RH.Login.View.LoginActivity
+import com.rafayee.RHAttorney.AppointmentInfoModule.AppointmentInfoActivity
 
 import com.rafayee.RHAttorney.HomeFragmentModule.Model.AttorneyList
 import com.rafayee.RHAttorney.R
@@ -45,6 +48,22 @@ public class AttorneyListAdapter : RecyclerView.Adapter<AttorneyListAdapter.View
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.e("sdfsdfsvdscd", "Asdas" + count)
+
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            activity.startActivity(Intent(activity, AppointmentInfoActivity::class.java))
+
+        })
+        if (!from.equals("total")) {
+           if (position==0){
+               holder.txtAttend.isVisible=true
+           }else{
+               holder.txtAttend.isVisible=false
+           }
+        }else{
+            holder.txtAttend.isVisible=false
+
+        }
+        Log.e("position",":: "+position)
         /*if (count == 4) {
             Log.e("sdfsdfsvdscd", "asdsd" + count)
             holder.seeMoreLay.visibility = View.GONE
@@ -155,6 +174,7 @@ public class AttorneyListAdapter : RecyclerView.Adapter<AttorneyListAdapter.View
         var nextAvailable: TextView
         var desc: TextView
         var name: TextView
+        var txtAttend : TextView
         var pic: CircleImageView
         var horiLine: View
         var seeMoreLay: LinearLayout
@@ -166,6 +186,7 @@ public class AttorneyListAdapter : RecyclerView.Adapter<AttorneyListAdapter.View
             pic = v.findViewById(R.id.attorneyPic)
             horiLine = v.findViewById(R.id.horiLine)
             seeMoreLay = v.findViewById(R.id.seeMoreLay)
+            txtAttend = v.findViewById(R.id.txt_attend)
         }
     }
 }

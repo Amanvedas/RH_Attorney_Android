@@ -1,14 +1,22 @@
 package com.rafayee.RHAttorney.AppointmentInfoModule
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.rafayee.RH.AttorneyList.Adapter.AttorneyListAdapter
+import com.rafayee.RH.MenuModule.View.UpdatePasswordActivity
 import com.rafayee.RHAttorney.HomeFragmentModule.Model.AttorneyList
+import com.rafayee.RHAttorney.HomeModule.FragmentInteractionListener
+import com.rafayee.RHAttorney.ParalegalModule.ClientInfoParalegalFragment
 import com.rafayee.RHAttorney.R
 
 class InviteOthersAdapter : RecyclerView.Adapter<InviteOthersAdapter.ViewHolder>() {
@@ -42,12 +50,27 @@ class InviteOthersAdapter : RecyclerView.Adapter<InviteOthersAdapter.ViewHolder>
     }
 
     override fun onBindViewHolder(holder: InviteOthersAdapter.ViewHolder, position: Int) {
+        Log.e("jfjfj","ktkt");
 
-        holder.email.text=data.get(position).email
-        holder.name.text=data.get(position).name
+        var navController: NavController? = null
+        var fragment: Fragment?=null
+        holder.email.text=data.get(position).email.toString()
+        holder.name.text=data.get(position).name.toString()
         holder.imgCancel.setOnClickListener(View.OnClickListener {
             data.removeAt(position)
             notifyDataSetChanged()
         })
+/*
+        holder.itemView.setOnClickListener(View.OnClickListener {
+          //  activity.startActivity(Intent(activity, ClientInfoParalegalFragment::class.java))
+            Navigation.findNavController(holder.itemView).navigate(R.id.client_info);
+            //replaceFragment(fragment)
+
+            lateinit var fragmentInteractionListener : FragmentInteractionListener
+            fragmentInteractionListener = activity as FragmentInteractionListener
+            fragmentInteractionListener.onClickButton(ClientInfoParalegalFragment())
+
+        })
+*/
     }
 }

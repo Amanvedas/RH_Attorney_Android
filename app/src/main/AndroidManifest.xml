@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.rafayee.RHAttorney">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
@@ -16,24 +17,64 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
+        tools:node="merge"
         android:theme="@style/Theme.RH_Attorney">
-        <activity android:name=".AppointmentInfoModule.SampleActivity"></activity>
-        <activity android:name=".AppointmentInfoModule.ConsultationResultActivity" />
-        <activity android:name=".AppointmentInfoModule.MeetingEndedActivity" />
-        <activity android:name=".AppointmentInfoModule.NavigateAwayActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ConsultationModule.SendFreeAgreementActivity" />
+        <activity android:name=".ConsultationModule.ConsultationReviewActivity" />
+        <activity android:name=".ConsultationModule.ConsultationPaymentActivity" />
+        <activity android:name=".ConsultationModule.ConsultationNotesActivity" />
+        <activity android:name=".AppointmentInfoModule.SampleActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+       <!-- <service
+            android:name=".MyService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </activity>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_edit" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/color_light_blue" />
+-->
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/file_1" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/toolbar_color" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/fab_transformation_scrim_behavior" />
+
+        <activity android:name=".ConsultationModule.ConsultationResultActivity" />
+        <activity android:name=".AppointmentInfoModule.MeetingEndedActivity" />
+        <activity android:name=".AppointmentInfoModule.NavigateAwayActivity" />
         <activity
             android:name="com.rafayee.RH.VideoCall.View.VideoActivity"
             android:label="@string/title_activity_video" />
 
+
+        <!--
         <uses-library
             android:name="com.google.android.wearable"
             android:required="true" />
+        -->
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -42,13 +83,9 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
-        <activity android:name=".AppointmentInfoModule.InviteOtherPeopleActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".AppointmentInfoModule.InviteOtherPeopleActivity"
+            android:windowSoftInputMode="adjustPan">
+                  </activity>
         <activity android:name=".AppointmentInfoModule.AppointmentInfoActivity" />
         <activity android:name="com.rafayee.RH.Login.View.LoginActivity" />
         <activity android:name="com.rafayee.RH.Forgot.View.ForgotActivity" />
@@ -56,25 +93,20 @@
         <activity android:name="com.rafayee.RH.OtpVerification.View.VerificationActivity" />
         <activity android:name="com.rafayee.RH.NewPassword.View.PasswordResetSuccussfully" />
         <activity android:name=".MainActivity" />
+        <activity android:name="com.rafayee.RH.VideoCall.View.CallConnectActivity"/>
         <activity android:name="com.rafayee.RH.SplashScreen.SplashScreen">
-
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
+
+        </activity>
+        <activity android:name="com.rafayee.RH.Bookings.View.BookingActivity">
+
         </activity>
         <activity android:name="com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity android:name=".MenuModule.ProfileActivity" />
         <activity android:name="com.rafayee.RH.MenuModule.ContactUsActivity" />

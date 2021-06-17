@@ -17,7 +17,7 @@
             <TextView
                 android:id="@+id/text_attorney"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:background="#EDF1F3"
                 android:fontFamily="@font/merriweather_bold"
                 android:gravity="start"
@@ -45,7 +45,7 @@
             <TextView
                 android:id="@+id/text_today"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/firstListAttorneys"
                 android:background="#EDF1F3"
                 android:fontFamily="@font/merriweather_bold"

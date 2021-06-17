@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/second_fragment"
-        android:title="Users"
+        android:title="Clients"
         android:icon="@drawable/users_1"/>
 
 </menu>

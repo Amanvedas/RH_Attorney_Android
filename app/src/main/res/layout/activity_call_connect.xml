@@ -31,7 +31,7 @@
                 app:pulse_repeat="0"
                 app:pulse_color="@color/toolbar_color"
                 app:pulse_startFromScratch="true"
-                app:pulse_interpolator="Decelerate">
+                app:pulse_interpolator="Accelerate">
 
                 <com.mikhaellopez.circularimageview.CircularImageView
                     android:layout_width="150dp"
@@ -48,6 +48,25 @@
                     android:layout_margin="40dp"
                     android:id="@+id/userPic"
                     tools:targetApi="lollipop" />
+
+
+                <!--
+                                <com.mikhaellopez.circularimageview.CircularImageView
+                                    android:layout_width="150dp"
+                                    android:layout_height="150dp"
+                                    android:src="@drawable/fone"
+                                    android:elevation="10dp"
+                                    app:civ_border_width="2dp"
+                                    app:civ_shadow="true"
+                                    app:civ_shadow_radius="5dp"
+                                    app:civ_shadow_gravity="center"
+                                    app:civ_shadow_color="@color/toolbar_color"
+                                    app:civ_border_color="@color/toolbar_color"
+                                    android:layout_centerInParent="true"
+                                    android:layout_margin="40dp"
+                                    android:id="@+id/userPic"
+                                    tools:targetApi="lollipop" />
+                -->
             </pl.bclogic.pulsator4droid.library.PulsatorLayout>
 
             <TextView
@@ -80,14 +99,26 @@
                 android:fontFamily="@font/proximanova_alt_regular"
                 android:text="REAL ESTATE LITIGATION &amp; PROBATE"/>
 
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:progressBarStyleLarge"
+                android:progress="100"
+                android:layout_marginTop="100dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/progressBar"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/my_progress_indeterminate"
+                />
+
             <TextView
                 android:id="@+id/connect"
                 android:layout_width="wrap_content"
                 android:text="Connecting...."
                 android:textColor="@color/black"
                 android:textAllCaps="false"
-                android:layout_marginTop="100dp"
                 android:gravity="center"
+                android:layout_marginTop="15dp"
                 android:textSize="16sp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/raleway_medium"
