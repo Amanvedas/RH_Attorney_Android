@@ -1,6 +1,7 @@
 package com.rafayee.RH.MenuModule
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.mikhaellopez.circularimageview.CircularImageView
 import com.rafayee.RH.AttornyProfile.Adapter.NotificationAdapter
 import com.rafayee.RHAttorney.Login.LoginResponseController
+import com.rafayee.RHAttorney.Login.LoginResponseModel
 import com.rafayee.RHAttorney.MenuModule.ProfileActivity
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
@@ -22,6 +25,10 @@ class NotificationsActivity : AppCompatActivity() {
     lateinit var notificationList: ArrayList<NotificationModel>
     lateinit var img_cancel: ImageView
     lateinit var imgPic: CircularImageView
+    var filename = "Valustoringfile"
+    var SP: SharedPreferences? = null
+    lateinit var responseData: String
+    lateinit var  loginResponseModel: LoginResponseModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +37,12 @@ class NotificationsActivity : AppCompatActivity() {
         img_cancel = findViewById(R.id.img_cancel)
         imgPic = findViewById(R.id.profile_pic)
         notificationListView = findViewById(R.id.notification_list_view)
-
+        SP = getSharedPreferences(filename, 0)
+        responseData = SP!!.getString("data", "").toString()
+        val gson = Gson()
+        loginResponseModel = gson.fromJson(responseData, LoginResponseModel::class.java)
         Glide.with(this)
-            .load(ServerApiCollection.IMAGE_URL+ LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.profilePic)
+            .load(ServerApiCollection.IMAGE_URL+ loginResponseModel!!.clientInfo!!.profilePic)
             .placeholder(R.drawable.profile_ic)
             .into(imgPic)
 

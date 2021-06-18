@@ -53,9 +53,11 @@ class LoginActivity : AppCompatActivity(),LoginView   {
     lateinit var faceId: ImageView
     lateinit var service : MyService
     lateinit var id : String
+    lateinit var tokenF : String
     lateinit var cardEmail: TextInputLayout
     lateinit var cardPwd: TextInputLayout
     var filename = "Valustoringfile"
+    var preferID = "TokenID"
     var SP: SharedPreferences? = null
     var firebaseAuth: FirebaseAuth? = null
     lateinit var loginButton: LoginButton
@@ -104,12 +106,12 @@ class LoginActivity : AppCompatActivity(),LoginView   {
         presenter = LoginPresenter()
          RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
 
-        presenter.LoginInstance(this,this@LoginActivity, email, pwd,id,btnRememberMe)
-
+        tokenF="token"
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
             if (task.isSuccessful){
                 print(task.result?.token)
                 Log.e("fire","token:: "+task.result?.token)
+                tokenF = task.result?.token.toString()
             }
             else{
                 print(task.exception?.message)
@@ -117,6 +119,9 @@ class LoginActivity : AppCompatActivity(),LoginView   {
 
             }
         }
+        Log.e("tokenRa",":: "+tokenF)
+        presenter.LoginInstance(this,this@LoginActivity, email, pwd,id,tokenF,btnRememberMe)
+
         FocusChangeListener(this, cardEmail, email, 0, 0, 10, 5, 5, 5, 10, 5)
         FocusChangeListener(this, cardPwd, pwd, 0, 0, 10, 5, 5, 5, 10, 5)
 
@@ -162,12 +167,19 @@ class LoginActivity : AppCompatActivity(),LoginView   {
 
         btnRememberMe.setOnClickListener(View.OnClickListener {
             if (btnRememberMe.isChecked){
-                SP = getSharedPreferences(filename, 0)
-                val getname: String? = SP!!.getString("key1", "")
-                val getpass: String? = SP!!.getString("key2", "")
+                SP = getSharedPreferences(preferID, 0)
+                if(email.text.isNullOrBlank()){
+                    if(pwd.text.isNullOrBlank()){
+                        val getname: String? = SP!!.getString("key1", "")
+                        val getpass: String? = SP!!.getString("key2", "")
+                        email.setText(getname)
+                        pwd.setText(getpass)
+                    }
 
-                email.setText(getname)
-                pwd.setText(getpass)
+
+                }
+
+
             }
 
         })
@@ -190,7 +202,7 @@ class LoginActivity : AppCompatActivity(),LoginView   {
                     // Log and toast
                     val msg = getString(R.string.messenger_send_button_text, token)
                     Log.e("lldld", ":= "+msg)
-                    Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(this@LoginActivity, msg, Toast.LENGTH_SHORT).show()
                 }
             })
 

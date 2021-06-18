@@ -50,8 +50,12 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
     lateinit var password: TextInputEditText
     private var loginView: LoginView? = null
     lateinit var deviceId : String
+    lateinit var deviceToken : String
     var SP: SharedPreferences? = null
     var filename = "Valustoringfile"
+    var SPToken: SharedPreferences? = null
+    var preferID = "TokenID"
+    lateinit var editToken: SharedPreferences.Editor
     lateinit var editit: SharedPreferences.Editor
     fun LoginInstance(
         context: Context,
@@ -59,6 +63,7 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
         username: TextInputEditText,
         password: TextInputEditText,
         deviceId : String,
+        deviceToken : String,
         rememberSwitch : SwitchCompat
     ){
         this.context=context
@@ -66,6 +71,7 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
         this.password=password
         this.loginView = loginView
         this.deviceId = deviceId
+        this.deviceToken = deviceToken
         this.rememberSwitch = rememberSwitch
     }
 
@@ -79,7 +85,7 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
                             if (isValidPassword(password.text?.trim().toString())){
                                 Log.e("isNetwork","Connected:: "+progressDialog.checkNetwork(context))
                                 if (progressDialog.checkNetwork(context)){
-                                    LoginApi(context,username.text.toString(),password.text.toString(),"dt5")
+                                    LoginApi(context,username.text.toString(),password.text.toString(),deviceToken)
                                 }else{
                                     progressDialog.hideProgress()
                                     Toast.makeText(context,"Please check your internet connection ",Toast.LENGTH_SHORT).show()
@@ -112,7 +118,7 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
                                 if (isValidPassword(password.text?.trim().toString())){
                                     Log.e("isNetwork","Connected:: "+progressDialog.checkNetwork(context))
                                     if (progressDialog.checkNetwork(context)){
-                                        LoginApi(context,username.text.toString(),password.text.toString(),"dt5")
+                                        LoginApi(context,username.text.toString(),password.text.toString(),deviceToken)
                                     }else{
                                         progressDialog.hideProgress()
                                         Toast.makeText(context,"Please check your internet connection ",Toast.LENGTH_SHORT).show()
@@ -205,35 +211,6 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
 
         val call = loginConection.LoginApi(loginObject)
         RetrofitCallbacks.getInstace().apiCallBacks("Login",call)
-
-    }
-    fun signOutApi(){
-        progressDialog.showProgress(context)
-        var forgotObject: JsonObject = JsonObject()
-        val jsonObject = JSONObject()
-
-        try {
-            jsonObject.put("emailID", username)
-            jsonObject.put("deviceID", deviceId)
-            jsonObject.put("deviceToken", "email")
-            jsonObject.put("deviceType", "mobile")
-            val jsonParser = JsonParser()
-            forgotObject = jsonParser.parse(jsonObject.toString()) as JsonObject
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        //  RetrofitCallbacks.getInstace().forgotCallBack(context,forgotObject)
-
-        val login : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-        val loginConection =
-            login.create(
-                ServerApiCollection::class.java
-            )
-
-        val call = loginConection.ForgotApi(forgotObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("Forgot",call)
 
     }
 
@@ -385,12 +362,24 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
             Log.e("ressss","oo:: "+loginObject)
             if (loginObject.get("response").equals(3)){
                 SP = context.getSharedPreferences(filename, 0);
+                SPToken = context.getSharedPreferences(preferID, 0);
                 editit = SP!!.edit()
+                editToken =SPToken!!.edit()
                 if (rememberSwitch.isChecked){
-                    editit.putString("key1", username.text.toString())
+                    editToken.putString("key1", username.text.toString())
+                    editToken.putString("key2", password.text.toString())
+                   /* editit.putString("key1", username.text.toString())
                     editit.putString("key2", password.text.toString())
-                    editit.apply()
+
+                    editit.apply()*/
+                    editToken.apply()
+
                 }
+                editit.putString("data", body)
+
+                editToken.putString("token", deviceToken)
+                editToken.putString("id", deviceId)
+                editToken.apply()
                 editit.putString("key3","isLogin")
                 editit.apply()
 

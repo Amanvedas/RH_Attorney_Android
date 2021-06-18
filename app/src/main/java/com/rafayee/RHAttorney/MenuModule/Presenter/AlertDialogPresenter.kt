@@ -5,24 +5,39 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RH.MenuModule.View.IUpdate
+import com.rafayee.RHAttorney.Helpers.ProgressDialog
 import com.rafayee.RHAttorney.Login.LoginResponseController
 import com.rafayee.RHAttorney.MainActivity
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
+import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 @Suppress("DEPRECATED_IDENTITY_EQUALS")
-class AlertDialogPresenter {
+class AlertDialogPresenter : RetrofitCallbacks.ServerResponseInterface {
     lateinit var context: Context
     lateinit var iUpdate: IUpdate
+    var progressDialog: ProgressDialog = ProgressDialog()
+    var preferID = "TokenID"
+    var SP: SharedPreferences? = null
+    lateinit var editit: SharedPreferences.Editor
+    var filename = "Valustoringfile"
 
     fun AlertDialogPresenter(context: Context) {
         this.context = context
@@ -33,6 +48,7 @@ class AlertDialogPresenter {
         this.iUpdate =iUpdate
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.logout_layout)
+
         // dialog.setTitle("Title...")
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
@@ -44,7 +60,14 @@ class AlertDialogPresenter {
         imgSignout.setOnClickListener(View.OnClickListener {
             dialog.dismiss()
           //  iUpdate.finishView()
-            context.startActivity(Intent(context, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+            if (progressDialog.checkNetwork(context)){
+                signOutApi(context)
+            }else{
+                Toast.makeText(context,
+                    "Please check your connection", Toast.LENGTH_SHORT).show()
+
+            }
+           // context.startActivity(Intent(context, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
 
         })
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -174,4 +197,53 @@ class AlertDialogPresenter {
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.show()
     }
+
+    override fun failureCallBack(failureMsg: String?) {
+        progressDialog.hideProgress()
+    }
+
+    override fun successCallBack(body: String?, from: String?) {
+        progressDialog.hideProgress()
+        SP = context.getSharedPreferences(filename, 0);
+        editit = SP!!.edit()
+        editit.clear()
+        editit.apply()
+
+    }
+
+fun signOutApi(context:Context){
+    progressDialog.showProgress(context)
+    SP = context.getSharedPreferences(preferID, 0)
+
+    var forgotObject: JsonObject = JsonObject()
+    val jsonObject = JSONObject()
+    val getname: String? = SP!!.getString("key1", "")
+    val getToken: String? = SP!!.getString("key1", "")
+    val getId: String? = SP!!.getString("key1", "")
+
+    try {
+        jsonObject.put("emailID", getname)
+        jsonObject.put("deviceID", getId)
+        jsonObject.put("deviceToken", getToken)
+        jsonObject.put("deviceType", "mobile")
+        val jsonParser = JsonParser()
+        forgotObject = jsonParser.parse(jsonObject.toString()) as JsonObject
+    } catch (e: JSONException) {
+        e.printStackTrace()
+    }
+    //  RetrofitCallbacks.getInstace().forgotCallBack(context,forgotObject)
+
+    val login : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
+    val loginConection =
+        login.create(
+            ServerApiCollection::class.java
+        )
+
+    val call = loginConection.signOutApi(forgotObject)
+    RetrofitCallbacks.getInstace().apiCallBacks("signOut",call)
+
+}
+
 }

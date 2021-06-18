@@ -176,7 +176,12 @@ public class RetrofitCallbacks {
         Log.e("sas",from);
         this.context = context;
         ServerApiCollection apiCollection = getClient().create(ServerApiCollection.class);
-        Call<ResponseBody> call = apiCollection.fetchAttorneyList(EndUrl);
+        Call<ResponseBody> call = null;
+        if (from.equals("fetchAttorneyList")){
+            call = apiCollection.fetchAttorneyList(EndUrl);
+        }else {
+            call = apiCollection.fetchCompanyInfo(EndUrl);
+        }
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {

@@ -1,6 +1,7 @@
 package com.rafayee.RH.HomeModule
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -22,7 +23,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.Gson
 import com.mikhaellopez.circularimageview.CircularImageView
+import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RH.MenuModule.ContactUsActivity
 import com.rafayee.RH.MenuModule.NotificationsActivity
 import com.rafayee.RH.MenuModule.PolicyActivity
@@ -30,17 +33,21 @@ import com.rafayee.RH.MenuModule.Presenter.AlertDialogPresenter
 import com.rafayee.RH.MenuModule.TermsAndConditionsActivity
 import com.rafayee.RH.MenuModule.View.IUpdate
 import com.rafayee.RH.MenuModule.View.UpdatePasswordActivity
+import com.rafayee.RHAttorney.Helpers.ProgressDialog
 import com.rafayee.RHAttorney.HomeModule.FragmentInteractionListener
 import com.rafayee.RHAttorney.Login.LoginResponseController
+import com.rafayee.RHAttorney.Login.LoginResponseModel
 import com.rafayee.RHAttorney.MainActivity
 import com.rafayee.RHAttorney.MenuModule.ProfileActivity
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
 import me.ibrahimsn.lib.SmoothBottomBar
 
 
 class HomeWithBottomTabsActivity : AppCompatActivity(),
-    NavigationView.OnNavigationItemSelectedListener, IUpdate, FragmentInteractionListener {
+    NavigationView.OnNavigationItemSelectedListener, IUpdate, FragmentInteractionListener,
+    RetrofitCallbacks.ServerResponseInterface {
     private lateinit var navController: NavController
     private lateinit var smoothBottomBar: SmoothBottomBar
     lateinit var imgToggle: ImageView
@@ -61,12 +68,22 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
     lateinit var profileIcon: CircularImageView
     private var doubleBackToExitPressedOnce = false
     lateinit var back: ImageView
+    var filename = "Valustoringfile"
+    var SP: SharedPreferences? = null
+    lateinit var editit: SharedPreferences.Editor
+    lateinit var responseData: String
+    lateinit var  loginResponseModel: LoginResponseModel
+    var progressDialog: ProgressDialog = ProgressDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_with_bottom_tabs)
+
+        RetrofitCallbacks.getInstace().initializeServerInterface(this@HomeWithBottomTabsActivity)
+
         initVar()
-        Log.e("getData","img:: "+ (LoginResponseController.myObj?.loginResponseModel!!.access_token ))
+        Log.e("getData","img:: "+ (loginResponseModel!!.access_token ))
+
     }
 
     private fun initVar() {
@@ -79,6 +96,10 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
         toolbar = findViewById(R.id.toolbar)
         txtTitle = findViewById(R.id.txt_title)
         alertDialogPresenter = AlertDialogPresenter()
+        SP = getSharedPreferences(filename, 0)
+        responseData = SP!!.getString("data", "").toString()
+        val gson = Gson()
+        loginResponseModel = gson.fromJson(responseData, LoginResponseModel::class.java)
         alertDialogPresenter.AlertDialogPresenter(this)
         val drawerToggle = ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close)
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
@@ -92,7 +113,7 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
         })
 
         Glide.with(this)
-            .load(ServerApiCollection.IMAGE_URL+ LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.profilePic)
+            .load(ServerApiCollection.IMAGE_URL+ loginResponseModel!!.clientInfo!!.profilePic)
             .placeholder(R.drawable.profile_ic)
             .into(profileIcon)
 
@@ -112,26 +133,26 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
         nav_pic = hView.findViewById<View>(R.id.img_pic) as CircularImageView
         txt_name = hView.findViewById<View>(R.id.txt_name) as TextView
         img_cancel = hView.findViewById<View>(R.id.img_cancel) as ImageView
-        if (!LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.profilePic!!.isEmpty()){
+        if (!loginResponseModel!!.clientInfo!!.profilePic!!.isEmpty()){
             Glide.with(this)
-                .load(ServerApiCollection.IMAGE_URL+ LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.profilePic)
+                .load(ServerApiCollection.IMAGE_URL+loginResponseModel!!.clientInfo!!.profilePic)
                 .placeholder(R.drawable.profile_ic)
                 .into(nav_pic)
             txtRound.visibility=View.GONE
         }else{
             txtRound.visibility=View.VISIBLE
-            if(LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.lastName!!.isEmpty()){
-                strFirstLetter = LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.firstName!!.take(1)
+            if(loginResponseModel!!.clientInfo!!.lastName!!.isEmpty()){
+                strFirstLetter = loginResponseModel!!.clientInfo!!.firstName!!.take(1)
                 strSecondLetter = ""
                 txtRound.text=strFirstLetter+strSecondLetter
             }else{
-                strFirstLetter = LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.firstName!!.take(1)
-                strSecondLetter =LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.lastName!!.take(1)
+                strFirstLetter =loginResponseModel!!.clientInfo!!.firstName!!.take(1)
+                strSecondLetter =loginResponseModel!!.clientInfo!!.lastName!!.take(1)
                 txtRound.text=strFirstLetter+strSecondLetter
 
             }
         }
-        txt_name.text=LoginResponseController.myObj?.loginResponseModel!!.clientInfo?.firstName+" "+LoginResponseController.myObj?.loginResponseModel!!.clientInfo?.lastName
+        txt_name.text=loginResponseModel!!.clientInfo?.firstName+" "+loginResponseModel!!.clientInfo?.lastName
         navController = findNavController(R.id.main_fragment)
         smoothBottomBar = findViewById(R.id.bottomBar)
         setupActionBarWithNavController(navController)
@@ -182,15 +203,15 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
             }
             R.id.nav_terms -> {
                 mDrawerLayout.closeDrawers()
-                startActivity(Intent(this, TermsAndConditionsActivity::class.java))
+                startActivity(Intent(this, TermsAndConditionsActivity::class.java).putExtra("terms","terms"))
             }
             R.id.nav_policy -> {
                 mDrawerLayout.closeDrawers()
-                startActivity(Intent(this, PolicyActivity::class.java))
+                startActivity(Intent(this, TermsAndConditionsActivity::class.java).putExtra("terms","privacy"))
             }
             R.id.nav_contact -> {
                 mDrawerLayout.closeDrawers()
-                startActivity(Intent(this, ContactUsActivity::class.java))
+                startActivity(Intent(this, TermsAndConditionsActivity::class.java))
             }
             R.id.nav_tech -> {
                 mDrawerLayout.closeDrawers()
@@ -313,5 +334,20 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
             }
         }
         //super.onBackPressed()
+    }
+
+    override fun failureCallBack(failureMsg: String?) {
+        progressDialog.hideProgress()
+
+    }
+
+    override fun successCallBack(body: String?, from: String?) {
+        progressDialog.hideProgress()
+        SP = getSharedPreferences(filename, 0);
+        editit = SP!!.edit()
+        editit.clear()
+        editit.apply()
+        startActivity(Intent(this, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+
     }
 }

@@ -14,12 +14,19 @@ public interface ServerApiCollection {
     //String BASE_URL = "https://api.robinsonandhenry.com/api/";
    // String IMAGE_URL = "https://api.robinsonandhenry.com/";
 
-    String BASE_URL = "https://dev-api.robinsonandhenry.com/api/";
+   /* String BASE_URL = "https://dev-api.robinsonandhenry.com/api/";
     String IMAGE_URL = "https://dev-api.robinsonandhenry.com";
+*/
+   String BASE_URL = "http://18.116.213.67:3000/api/";
+    String IMAGE_URL = "http://18.116.213.67:3000";
 
 
     @POST
     Call<ResponseBody> PostDataFromServer(@Url String url, @Body JsonObject registerObj);
+
+    @POST
+    Call<ResponseBody> PolicyFromServer(@Url String url);
+
     @POST("attorneys/login")
     Call<ResponseBody> LoginApi(@Body JsonObject loginObject );
     @POST("attorneys/forgotpassword")
@@ -39,4 +46,7 @@ public interface ServerApiCollection {
 
     @GET
     Call<ResponseBody> fetchAttorneyList(@Url String url);
+
+    @POST
+    Call<ResponseBody> fetchCompanyInfo(@Url String url);
 }
