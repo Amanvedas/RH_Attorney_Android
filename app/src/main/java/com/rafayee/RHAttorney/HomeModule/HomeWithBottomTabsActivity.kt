@@ -342,6 +342,15 @@ class HomeWithBottomTabsActivity : AppCompatActivity(),
     }
 
     override fun successCallBack(body: String?, from: String?) {
+        if (from.equals("signOut")){
+            progressDialog.hideProgress()
+            SP = getSharedPreferences(filename, 0);
+            editit = SP!!.edit()
+            editit.clear()
+            editit.apply()
+            startActivity(Intent(this, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+
+        }
         progressDialog.hideProgress()
         SP = getSharedPreferences(filename, 0);
         editit = SP!!.edit()

@@ -203,12 +203,13 @@ class AlertDialogPresenter : RetrofitCallbacks.ServerResponseInterface {
     }
 
     override fun successCallBack(body: String?, from: String?) {
-        progressDialog.hideProgress()
-        SP = context.getSharedPreferences(filename, 0);
-        editit = SP!!.edit()
-        editit.clear()
-        editit.apply()
-
+        if (from.equals("signOut")){
+            progressDialog.hideProgress()
+            SP =context.getSharedPreferences(filename, 0);
+            editit = SP!!.edit()
+            editit.clear()
+            editit.apply()
+        }
     }
 
 fun signOutApi(context:Context){

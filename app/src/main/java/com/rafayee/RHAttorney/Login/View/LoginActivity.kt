@@ -164,8 +164,16 @@ class LoginActivity : AppCompatActivity(),LoginView   {
 
         id  = Settings.Secure.getString(contentResolver,Settings.Secure.ANDROID_ID)
         Log.e("idd","is:: "+id)
+        SP = getSharedPreferences(preferID, 0)
+        if (SP!=null){
+            btnRememberMe.isChecked = true
+            val getname: String? = SP!!.getString("key1", "")
+            val getpass: String? = SP!!.getString("key2", "")
+            email.setText(getname)
+            pwd.setText(getpass)
+        }
 
-        btnRememberMe.setOnClickListener(View.OnClickListener {
+        /*btnRememberMe.setOnClickListener(View.OnClickListener {
             if (btnRememberMe.isChecked){
                 SP = getSharedPreferences(preferID, 0)
                 if(email.text.isNullOrBlank()){
@@ -182,7 +190,7 @@ class LoginActivity : AppCompatActivity(),LoginView   {
 
             }
 
-        })
+        })*/
 
 
      //   val token = FirebaseInstanceId.getInstance().token
