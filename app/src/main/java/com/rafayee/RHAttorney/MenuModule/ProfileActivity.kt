@@ -3,27 +3,20 @@ package com.rafayee.RHAttorney.MenuModule
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.rafayee.RH.AttorneyList.Adapter.AttorneyListAdapter
-import com.rafayee.RH.MenuModule.Presenter.AlertDialogPresenter
-import com.rafayee.RHAttorney.Login.LoginResponseController
-import com.rafayee.RHAttorney.Login.LoginResponseModel
+import com.rafayee.RHAttorney.Login.Model.LoginResponseModel
 import com.rafayee.RHAttorney.MenuModule.Adapter.ProfileAdapter
 import com.rafayee.RHAttorney.MenuModule.Adapter.RatingAdapter
+import com.rafayee.RHAttorney.MenuModule.Presenter.AlertDialogPresenter
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
 import com.skyhope.showmoretextview.ShowMoreTextView
@@ -39,9 +32,6 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var imgView : ImageView
     lateinit var circleImage : ImageView
     lateinit var imgBack : ImageView
-    var filename = "Valustoringfile"
-    var SP: SharedPreferences? = null
-    lateinit var responseData: String
     lateinit var  loginResponseModel: LoginResponseModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,10 +43,7 @@ class ProfileActivity : AppCompatActivity() {
         imgView = findViewById(R.id.img_down)
         imgBack = findViewById(R.id.back_btn)
         circleImage = findViewById(R.id.img_profile)
-        SP = getSharedPreferences(filename, 0)
-        responseData = SP!!.getString("data", "").toString()
-        val gson = Gson()
-        loginResponseModel = gson.fromJson(responseData, LoginResponseModel::class.java)
+        loginResponseModel = Gson().fromJson(getSharedPreferences("LoginPref", 0).getString("userInfo","").toString(), LoginResponseModel::class.java)
         alertDialogPresenter = AlertDialogPresenter()
         txtView = findViewById(R.id.text_discription)
         txtYoutube = findViewById(R.id.txt_video)
@@ -71,11 +58,11 @@ class ProfileActivity : AppCompatActivity() {
         })
 
         Glide.with(this)
-            .load(ServerApiCollection.IMAGE_URL+ loginResponseModel!!.clientInfo!!.profilePic)
+            .load(ServerApiCollection.IMAGE_URL+ loginResponseModel.attorneysList.get(0).profilePic)
             .placeholder(R.drawable.profile_ic)
             .into(circleImage)
 
-        txtName.text=loginResponseModel!!.clientInfo?.firstName+" "+loginResponseModel!!.clientInfo?.lastName
+        txtName.text=loginResponseModel.attorneysList.get(0).firstName+" "+loginResponseModel.attorneysList.get(0).lastName
 
         txtYoutube.setOnClickListener(View.OnClickListener {
             val webIntent = Intent(

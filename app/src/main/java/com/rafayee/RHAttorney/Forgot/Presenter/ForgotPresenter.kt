@@ -1,15 +1,15 @@
-package com.rafayee.RH.Forgot.Presenter
+package com.rafayee.RHAttorney.Forgot.Presenter
 
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import com.rafayee.RH.OtpVerification.View.VerificationActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.rafayee.RHAttorney.Helpers.ProgressDialog
+import com.rafayee.RHAttorney.OtpVerification.View.VerificationActivity
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
 import org.json.JSONException
@@ -19,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.regex.Pattern
 
 class ForgotPresenter : RetrofitCallbacks.ServerResponseInterface {
-    var progressDialog: ProgressDialog = ProgressDialog()
     lateinit var email: TextInputEditText
     lateinit var context: Context
     lateinit var strFrom :String
@@ -32,11 +31,11 @@ class ForgotPresenter : RetrofitCallbacks.ServerResponseInterface {
         if (email.text?.trim()?.isNotEmpty()!!) {
             if (validEmail(email.text.toString())) {
                 Log.e("afdaf","ddd "+str)
-                if (progressDialog.checkNetwork(context)){
+                if (ProgressDialog.getInstance().checkNetwork(context)){
                     strFrom = str
                     forgotApi(context,email.text.toString())
                 }else{
-                    progressDialog.hideProgress()
+                    ProgressDialog.getInstance().hideProgress()
                     Toast.makeText(context,"Please check your internet connection ",Toast.LENGTH_SHORT).show()
                 }
             } else {
@@ -49,7 +48,7 @@ class ForgotPresenter : RetrofitCallbacks.ServerResponseInterface {
         }
     }
     fun forgotApi(context:Context,email:String){
-        progressDialog.showProgress(context)
+        ProgressDialog.getInstance().showProgress(context)
         var forgotObject: JsonObject = JsonObject()
         val jsonObject = JSONObject()
 
@@ -61,34 +60,25 @@ class ForgotPresenter : RetrofitCallbacks.ServerResponseInterface {
             e.printStackTrace()
         }
       //  RetrofitCallbacks.getInstace().forgotCallBack(context,forgotObject)
-
-        val login : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-        val loginConection =
-            login.create(
-                ServerApiCollection::class.java
-            )
-
-        val call = loginConection.ForgotApi(forgotObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("Forgot",call)
-
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/forgotpassword",forgotObject,"Forgot")
     }
 
 
     private fun validEmail(target: String?): Boolean {
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        //val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        val emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         val pattern = Pattern.compile(emailPattern)
         return !TextUtils.isEmpty(target) && pattern.matcher(target).matches()
     }
 
     override fun failureCallBack(failureMsg: String?) {
-        progressDialog.hideProgress()
+        ProgressDialog.getInstance().hideProgress()
         Log.e("Working","no:: ")
+        Toast.makeText(context, failureMsg, Toast.LENGTH_SHORT).show()
     }
 
     override fun successCallBack(body: String?, from: String?) {
-        progressDialog.hideProgress()
+        ProgressDialog.getInstance().hideProgress()
         Log.e("lalald","ff:: "+body)
         Log.e("strignF",":: "+strFrom)
         if (strFrom.equals("")){

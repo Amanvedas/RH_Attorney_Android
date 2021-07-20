@@ -1,4 +1,4 @@
-package com.rafayee.RH.MenuModule
+package com.rafayee.RHAttorney.MenuModule
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
@@ -12,10 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.rafayee.RHAttorney.Helpers.ProgressDialog
+import com.rafayee.RHAttorney.MenuModule.Model.CompanyInfo
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
-import com.rafayee.RHCustomer.MenuModule.Model.CompanyInfo
 import com.vedas.apna.ServerConnections.AppStatus
 
 class TermsAndConditionsActivity : AppCompatActivity() , RetrofitCallbacks.ServerResponseInterface{

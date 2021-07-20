@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+
+    <RelativeLayout
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/rectangle_box"
+        >
+
+    <TextView
+        android:id="@+id/time"
+        android:textSize="14sp"
+        android:textColor="#28292D"
+        android:fontFamily="@font/opensans_regular"
+        android:layout_width="wrap_content"
+        android:paddingTop="9dp"
+        android:paddingBottom="9dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="16dp"
+
+        android:background="@color/white"
+
+        android:layout_height="wrap_content"
+
+        android:text="9.30 AM" />
+    </RelativeLayout>
+    </RelativeLayout>

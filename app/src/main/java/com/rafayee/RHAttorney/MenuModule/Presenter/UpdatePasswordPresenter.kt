@@ -1,25 +1,19 @@
-package com.rafayee.RH.MenuModule.Presenter
+package com.rafayee.RHAttorney.MenuModule.Presenter
 
 import android.content.Context
-import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.rafayee.RH.MenuModule.PasswordUpdateSuccessfully
-import com.rafayee.RH.MenuModule.View.IUpdate
-import com.rafayee.RH.MenuModule.View.UpdatePasswordActivity
-import com.rafayee.RH.OtpVerification.View.VerificationActivity
 import com.rafayee.RHAttorney.Helpers.ProgressDialog
-import com.rafayee.RHAttorney.Login.LoginResponseController
+import com.rafayee.RHAttorney.Login.Model.LoginResponseController
+import com.rafayee.RHAttorney.MenuModule.View.IUpdate
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
-import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
+import com.vedas.apna.ServerConnections.AppStatus
 import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.regex.Pattern
 
 class UpdatePasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
@@ -28,7 +22,6 @@ class UpdatePasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
     lateinit var passwordNew: TextInputEditText
     lateinit var passwordConform: TextInputEditText
     lateinit var iUpdate: IUpdate
-    var progressDialog: ProgressDialog = ProgressDialog()
 
     fun UpdatePasswordPresenter(context : Context ,iUpdate: IUpdate,passwordOld: TextInputEditText,passwordNew: TextInputEditText
                                 ,passwordConform: TextInputEditText){
@@ -39,7 +32,7 @@ class UpdatePasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
         this.iUpdate = iUpdate
     }
 
-    fun validations(){
+    /*fun validations(){
         if(passwordOld.text?.trim()?.isNotEmpty()!!){
             if (passwordOld.text!!.length>=8 && passwordOld.text!!.length<=13){
                 if (isValidPassword((passwordOld.text!!.toString()))){
@@ -96,15 +89,91 @@ class UpdatePasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
         }else{
             Toast.makeText(context,"Enter old password", Toast.LENGTH_SHORT).show()
         }
+    }*/
+
+    fun validations() {
+        if (passwordOld.text?.trim()?.isNotEmpty()!!) {
+            if (isValidPassword(passwordOld.text.toString())){
+                if (passwordNew.text?.trim()?.isNotEmpty()!!) {
+                    if (isValidPassword(passwordNew.text.toString())){
+                        if (passwordConform.text?.trim()?.isNotEmpty()!!) {
+                            if (isValidPassword(passwordConform.text.toString())){
+                                if (!(passwordOld.text.toString()
+                                        .equals(passwordNew.text.toString()))
+                                ) {
+                                    if (passwordNew.text.toString()
+                                            .equals(passwordConform.text.toString())
+                                    ) {
+                                        if (AppStatus.getInstance(context).isConnected()) {
+                                            ProgressDialog.getInstance().showProgress(context)
+                                            changePassword()
+                                        } else {
+                                            Toast.makeText(
+                                                context,
+                                                "No Internet Connection!!!!",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Password mismatched",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Cross check old password & new password",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            } else {
+                                passwordConform.requestFocus()
+                                Toast.makeText(
+                                    context,
+                                    "Confirm Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            passwordConform.requestFocus()
+                            Toast.makeText(context, "Enter conform password", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    } else {
+                        passwordNew.requestFocus()
+                        Toast.makeText(
+                            context,
+                            "New Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    passwordNew.requestFocus()
+                    Toast.makeText(context, "Enter new password", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                passwordOld.requestFocus()
+                Toast.makeText(
+                    context,
+                    "Old Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } else {
+            passwordOld.requestFocus()
+            Toast.makeText(context, "Enter old password", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun changePassword(){
-        progressDialog.showProgress(context)
+        ProgressDialog.getInstance().showProgress(context)
         var passwordObject: JsonObject = JsonObject()
         val jsonObject = JSONObject()
 
         try {
-            jsonObject.put("emailID", LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.emailID )
+            jsonObject.put("emailID", context.getSharedPreferences("LoginPref", 0).getString("emailID", "").toString() )
             jsonObject.put("oldPassword",passwordOld.text.toString())
             jsonObject.put("newPassword",passwordNew.text.toString())
 
@@ -115,7 +184,7 @@ class UpdatePasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
         }
         //  RetrofitCallbacks.getInstace().forgotCallBack(context,forgotObject)
 
-        val password : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
+        /*val password : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
         val passwordConnection =
@@ -124,30 +193,23 @@ class UpdatePasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
             )
 
         val call = passwordConnection.updatePassword(passwordObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("UpdatePassword",call)
-
+        RetrofitCallbacks.getInstace().apiCallBacks("UpdatePassword",call)*/
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/changepassword",passwordObject,"UpdatePassword")
     }
 
     fun isValidPassword(password: String?): Boolean {
-        /* val pattern: Pattern
-         val matcher: Matcher
-         val PASSWORD_PATTERN =
-             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
-         pattern = Pattern.compile(PASSWORD_PATTERN)
-         matcher = pattern.matcher(password)
-         return matcher.matches()*/
         val expression = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@!%*?&#])(?=\\S+$)[A-Za-z\\d$@!%*?&#]{8,13}"
         val pattern = Pattern.compile(expression)
         return !TextUtils.isEmpty(password) && pattern.matcher(password).matches()    }
 
 
     override fun failureCallBack(failureMsg: String?) {
-        progressDialog.hideProgress()
-
+        ProgressDialog.getInstance().hideProgress()
+        Toast.makeText(context,failureMsg,Toast.LENGTH_SHORT).show()
     }
 
     override fun successCallBack(body: String?, from: String?) {
-        progressDialog.hideProgress()
+        ProgressDialog.getInstance().hideProgress()
         Log.e("lalald","ff:: "+body)
         Log.e("strignF",":: "+from)
         if (from.equals("UpdatePassword")){

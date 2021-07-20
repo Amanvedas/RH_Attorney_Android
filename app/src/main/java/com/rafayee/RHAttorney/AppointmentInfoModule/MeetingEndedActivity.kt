@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RHAttorney.ConsultationModule.ConsultationResultActivity
+import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RHAttorney.R
 
 class MeetingEndedActivity : AppCompatActivity() {

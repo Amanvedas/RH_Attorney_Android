@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.rafayee.RH.AttorneyList.Adapter.AttorneyListAdapter
 import com.rafayee.RHAttorney.R
 
 class ProfileAdapter (private var context: Context) : RecyclerView.Adapter<ProfileAdapter.ViewHolder>() {

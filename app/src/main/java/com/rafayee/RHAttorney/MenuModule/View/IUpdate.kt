@@ -1,4 +1,4 @@
-package com.rafayee.RH.MenuModule.View
+package com.rafayee.RHAttorney.MenuModule.View
 
 interface IUpdate{
     fun finishView();

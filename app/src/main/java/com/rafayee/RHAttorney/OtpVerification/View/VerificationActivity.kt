@@ -1,4 +1,4 @@
-package com.rafayee.RH.OtpVerification.View
+package com.rafayee.RHAttorney.OtpVerification.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,11 +7,11 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.rafayee.RH.OtpVerification.Presenter.OtpVerificationPresenter
-import com.rafayee.RH.Utils.PinFieldFocusChangeListener
-import com.rafayee.RH.Utils.PinInFiled
+import com.rafayee.RHAttorney.OtpVerification.Presenter.OtpVerificationPresenter
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
+import com.rafayee.RHAttorney.Utils.PinFieldFocusChangeListener
+import com.rafayee.RHAttorney.Utils.PinInFiled
 
 class VerificationActivity : AppCompatActivity() {
     lateinit var verify: ImageView
@@ -21,7 +21,7 @@ class VerificationActivity : AppCompatActivity() {
     lateinit var ed3: EditText
     lateinit var ed4: EditText
     lateinit var txtResend : TextView
-    lateinit var presenter:OtpVerificationPresenter
+    lateinit var presenter: OtpVerificationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +40,10 @@ class VerificationActivity : AppCompatActivity() {
             presenter.OtpVerificationInstance(this,strEmail,ed1,ed2,ed3,ed4)
         }else{
             presenter.OtpVerificationInstance(this,"strEmail",ed1,ed2,ed3,ed4)
-
         }
-
+        RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
         verify.setOnClickListener {
+            RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
             Log.e("dadsf","fsd")
             if (string != null) {
                 presenter.validations(string)
@@ -60,7 +60,6 @@ class VerificationActivity : AppCompatActivity() {
         back.setOnClickListener {
             onBackPressed()
         }
-        RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
 
     }
 

@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.widget.ProgressBar
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RH.VideoCall.View.VideoActivity
+import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RHAttorney.R
 
 class NavigateAwayActivity : AppCompatActivity() {

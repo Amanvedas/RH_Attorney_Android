@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Bookings.View.BookingActivity">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/toolbar_color">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/back_white" />
+        <TextView
+            android:id="@+id/txt_title"
+            style="@style/heading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/merriweather_regular"
+            android:text="Calendar"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:text="Pick a Date &amp; Time"
+                    android:textColor="@color/toolbar_color"
+                    android:textSize="17sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:text="Duration : 30 minutes"
+                    android:textColor="#A5A5A5"
+                    android:textSize="12sp" />
+
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/proCal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:background="#F5F5F5"
+                    app:mcv_arrowColor="#FEBF3A"
+                    app:mcv_dateTextAppearance="@style/CustomTextAppearance"
+                    app:mcv_firstDayOfWeek="sunday"
+                    app:mcv_headerTextAppearance="@style/headerText"
+                    app:mcv_leftArrowMask="@drawable/arrow_2"
+                    app:mcv_rightArrowMask="@drawable/arrow_1"
+                    app:mcv_selectionColor="@color/toolbar_color"
+                    app:mcv_showOtherDates="out_of_range"
+                    app:mcv_tileHeight="40dp"
+                    app:mcv_tileSize="40dp"
+                    app:mcv_tileWidth="40dp"
+                    app:mcv_titleAnimationOrientation="horizontal"
+                    app:mcv_weekDayLabels="@array/months"
+                    app:mcv_weekDayTextAppearance="@style/weekDaysText" />
+
+                <com.applandeo.materialcalendarview.CalendarView
+                    android:id="@+id/calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:visibility="gone"
+                    app:abbreviationsBarColor="#F5F5F5"
+                    app:abbreviationsLabelsColor="@color/toolbar_color"
+                    app:daysLabelsColor="@color/toolbar_color"
+                    app:disabledDaysLabelsColor="#BBB4B4"
+                    app:headerColor="#F5F5F5"
+                    app:headerLabelColor="@color/toolbar_color"
+                    app:pagesColor="#F5F5F5"
+                    app:selectionColor="@color/toolbar_color"
+                    app:todayLabelColor="#FEBF3A"
+                    app:type="one_day_picker" />
+                <TextView
+                    android:id="@+id/startsFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="21dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/merriweather_regular"
+                    android:lines="1"
+                    android:text="Available Starting times for 18 Nov, 2020"
+                    android:textColor="@color/toolbar_color"
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="26dp">
+
+                </RelativeLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:fadeScrollbars="false"
+                    app:cardUseCompatPadding="true">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:id="@+id/ampmLay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:fontFamily="@font/merriweather_regular"
+                                    android:text="AM"
+                                    android:textColor="@color/toolbar_color"
+                                    android:textSize="17sp" />
+                                <View
+                                    android:layout_width="40dp"
+                                    android:layout_height="2dp"
+                                    android:layout_marginTop="7dp"
+                                    android:background="#FEBF3A" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_weight="1"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:fontFamily="@font/merriweather_regular"
+                                    android:text="PM"
+                                    android:textColor="@color/toolbar_color"
+                                    android:textSize="17sp" />
+                                <View
+                                    android:layout_width="40dp"
+                                    android:layout_height="2dp"
+                                    android:layout_marginTop="7dp"
+                                    android:background="#FEBF3A" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="17dp"
+                            android:fadeScrollbars="false"
+                            android:scrollbarThumbVertical="@drawable/custom_scroll"
+                            android:scrollbars="vertical">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:weightSum="2">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="vertical">
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/amRecyclerView"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_weight="1"
+                                    android:gravity="center_horizontal"
+                                    android:orientation="vertical">
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/pmRecyclerView"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </androidx.core.widget.NestedScrollView>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardCnf"
+                        android:layout_width="225dp"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardUseCompatPadding="true">
+
+                        <TextView
+                            android:id="@+id/cnfBook"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#EAEAEA"
+                            android:enabled="false"
+                            android:fontFamily="@font/merriweather_regular"
+                            android:gravity="center"
+                            android:text="Confirm Time"
+                            android:textColor="@color/cnf_text_color"
+                            android:textSize="15sp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <ImageView
+                        android:id="@+id/cnfImg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/button_5"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

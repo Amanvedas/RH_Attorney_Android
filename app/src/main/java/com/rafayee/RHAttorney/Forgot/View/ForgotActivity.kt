@@ -1,16 +1,15 @@
-package com.rafayee.RH.Forgot.View
+package com.rafayee.RHAttorney.Forgot.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import com.rafayee.RH.Forgot.Presenter.ForgotPresenter
-
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.rafayee.RH.Utils.FocusChangeListener
+import com.rafayee.RHAttorney.Forgot.Presenter.ForgotPresenter
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
+import com.rafayee.RHAttorney.Utils.FocusChangeListener
 
 
 class ForgotActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class ForgotActivity : AppCompatActivity() {
 
         send.setOnClickListener {
             Log.e("afdaf","fff "+string)
-
+            RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
             string?.let { it1 -> presenter.validations(it1) }
         }
         back.setOnClickListener { onBackPressed() }

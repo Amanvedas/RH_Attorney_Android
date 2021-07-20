@@ -1,11 +1,10 @@
-package com.rafayee.RH.MenuModule
+package com.rafayee.RHAttorney.MenuModule
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RHAttorney.AppointmentInfoModule.MeetingEndedActivity
+import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RHAttorney.R
 
 

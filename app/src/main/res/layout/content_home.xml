@@ -113,7 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <me.ibrahimsn.lib.SmoothBottomBar
+       <!-- <me.ibrahimsn.lib.SmoothBottomBar
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="65dp"
@@ -128,9 +128,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:menu="@menu/bottom_menu"
             app:textColor="@color/toolbar_color"
-            app:textSize="12sp" />
+            app:textSize="12sp" />-->
 
-        <!--
                 <me.ibrahimsn.lib.SmoothBottomBar
                     android:id="@+id/bottomBar"
                     android:layout_width="match_parent"
@@ -138,7 +137,7 @@
                     android:layout_marginTop="55dp"
                     app:iconMargin="10dp"
                     app:backgroundColor="#F5F5F5"
-                    app:iconSize="18dp"
+                    app:iconSize="20dp"
                     app:iconTint="#9D9E9F"
                     app:iconTintActive="@color/toolbar_color"
                     app:indicatorColor="#3252758B"
@@ -148,9 +147,8 @@
                     app:itemFontFamily="@font/merriweather_regular"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:menu="@menu/bottom_menu"
-                    app:sideMargins="15dp"
+                    app:sideMargins="30dp"
                     app:textColor="@color/toolbar_color"
                     app:textSize="12sp" />
-        -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

@@ -1,8 +1,7 @@
-package com.rafayee.RH.AttornyProfile.Adapter
+package com.rafayee.RHAttorney.AttornyProfile.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,8 +12,8 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.rafayee.RH.Helpers.TimeAgo
-import com.rafayee.RH.MenuModule.NotificationModel
+import com.rafayee.RHAttorney.Helpers.TimeAgo
+import com.rafayee.RHAttorney.MenuModule.NotificationModel
 import com.rafayee.RHAttorney.R
 
 

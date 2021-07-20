@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatButton
+import com.rafayee.RHAttorney.Login.View.LoginActivity
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -79,7 +79,7 @@ class SuccessDialogActivity : AppCompatActivity() {
             // Change //startActivity(Intent(this@SuccessDialogActivity, MoreInfoActivity::class.java))
         }
         close.setOnClickListener {
-            startActivity(Intent(this@SuccessDialogActivity, MainActivity::class.java))
+            startActivity(Intent(this@SuccessDialogActivity, LoginActivity::class.java))
         }
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
         // set the custom dialog components - text, image and button

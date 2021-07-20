@@ -1,4 +1,4 @@
-package com.rafayee.RH.SplashScreen
+package com.rafayee.RHAttorney.SplashScreen
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -7,15 +7,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.WindowManager
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RH.Login.View.LoginActivity
-import com.rafayee.RHAttorney.Login.LoginResponseController
-import com.rafayee.RHAttorney.MainActivity
+import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
+import com.rafayee.RHAttorney.Login.View.LoginActivity
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.SessionManager
+import com.rafayee.RHAttorney.ServerConnections.SessionManager.KEY_USERID
+import com.rafayee.RHAttorney.Utils.BiometricUtils.splash_fingerface
 
 class SplashScreen : AppCompatActivity() {
-    var filename = "Valustoringfile"
-    var SP: SharedPreferences? = null
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen_activity)
@@ -31,20 +31,23 @@ class SplashScreen : AppCompatActivity() {
         // we used the postDelayed(Runnable, time) method
         // to send a message with a delayed time.
         Handler().postDelayed({
-            SP = getSharedPreferences(filename, 0)
-            val getname: String? = SP!!.getString("key3", "")
-            Log.e("ididif","d: "+getname)
-            if (getname.equals("isLogin")){
-                val intent = Intent(this, HomeWithBottomTabsActivity::class.java)
-                startActivity(intent)
-                finish()
-            }else{
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-
+            redirect()
         }, 3000) // 3000 is the delayed time in milliseconds.
 
+    }
+    public fun redirect() {
+        val sessionManager = SessionManager(this@SplashScreen)
+        Log.e("checkLogin", " " + sessionManager.isLoggedIn)
+        if (sessionManager.isLoggedIn) {
+            sharedPreferences = getSharedPreferences("RH", MODE_PRIVATE)
+            val userID: String? = sharedPreferences.getString(KEY_USERID, "")
+            Log.e("userId", " $userID")
+            splash_fingerface = true
+            startActivity(Intent(this@SplashScreen, HomeWithBottomTabsActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            //startActivity(Intent(this@SplashScreen, MainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+        }else {
+            startActivity(Intent(this@SplashScreen, LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+        }
+        finish()
     }
 }

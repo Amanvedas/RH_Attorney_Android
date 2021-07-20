@@ -14,11 +14,11 @@ public interface ServerApiCollection {
     //String BASE_URL = "https://api.robinsonandhenry.com/api/";
    // String IMAGE_URL = "https://api.robinsonandhenry.com/";
 
-   /* String BASE_URL = "https://dev-api.robinsonandhenry.com/api/";
+    String BASE_URL = "https://dev-api.robinsonandhenry.com/api/";
     String IMAGE_URL = "https://dev-api.robinsonandhenry.com";
-*/
-   String BASE_URL = "http://18.116.213.67:3000/api/";
-    String IMAGE_URL = "http://18.116.213.67:3000";
+
+    /*String BASE_URL = "http://18.116.213.67:3000/api/";
+    String IMAGE_URL = "http://18.116.213.67:3000";*/
 
 
     @POST
@@ -27,22 +27,22 @@ public interface ServerApiCollection {
     @POST
     Call<ResponseBody> PolicyFromServer(@Url String url);
 
-    @POST("attorneys/login")
+    /*@POST("attorney/login")
     Call<ResponseBody> LoginApi(@Body JsonObject loginObject );
-    @POST("attorneys/forgotpassword")
+    @POST("attorney/forgotpassword")
     Call<ResponseBody> ForgotApi(@Body JsonObject loginObject );
 
-    @POST("attorneys/verify")
+    @POST("attorney/verify")
     Call<ResponseBody> verifyApi(@Body JsonObject loginObject );
 
-    @POST("attorneys/reset_password")
+    @POST("attorney/reset_password")
     Call<ResponseBody> resetPassword(@Body JsonObject loginObject );
 
-    @POST("attorneys/changepassword")
+    @POST("attorney/changepassword")
     Call<ResponseBody> updatePassword(@Body JsonObject loginObject );
 
-    @POST("attorneys/signout")
-    Call<ResponseBody> signOutApi(@Body JsonObject logout);
+    @POST("attorney/signout")
+    Call<ResponseBody> signOutApi(@Body JsonObject logout);*/
 
     @GET
     Call<ResponseBody> fetchAttorneyList(@Url String url);

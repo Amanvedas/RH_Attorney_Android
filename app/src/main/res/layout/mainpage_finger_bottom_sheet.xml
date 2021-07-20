@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="5dp">
+    <LinearLayout
+        android:id="@+id/editTextLay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp"
+        android:orientation="vertical"
+        android:visibility="visible">
+        <TextView
+            android:id="@+id/idName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/raleway_medium"
+            android:gravity="center_horizontal"
+            android:text="Touch ID/Face ID"
+            android:textColor="@color/toolbar_color"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/textSentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:fontFamily="@font/raleway_medium"
+            android:gravity="center_horizontal"
+            android:text="Your failed to enable Touch ID/Face ID.\nplease enter login password for R&amp;H application then only application unlocked."
+            android:textColor="@color/toolbar_color"
+            android:textSize="14sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="40dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PASSWORD"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_edittext"
+                android:textColorHint="#97ACB9"
+                app:boxStrokeColor="@color/toolbar_color"
+                app:hintTextAppearance="@style/hintText"
+                app:hintTextColor="#97ACB9"
+                app:boxStrokeWidth="0dp"
+                app:passwordToggleDrawable="@drawable/eye_on_off"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/toolbar_color"
+                app:startIconDrawable="@drawable/icon_feather_lock"
+                app:startIconTint="@color/toolbar_color">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:paddingLeft="16dp"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:textAppearance="@style/hintText"
+                    android:textCursorDrawable="@null"
+                    android:textEditSuggestionItemLayout="@color/transparent" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginRight="40dp"
+            android:fontFamily="@font/raleway_medium"
+            android:paddingTop="17dp"
+            android:paddingBottom="17dp"
+            android:text="FORGOT"
+            android:textColor="@color/toolbar_color"
+            android:textSize="12sp" />
+        <ImageView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ok" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

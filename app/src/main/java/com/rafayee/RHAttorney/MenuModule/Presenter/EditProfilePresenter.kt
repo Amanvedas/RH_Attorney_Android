@@ -79,7 +79,8 @@ class EditProfilePresenter {
         }
     }
     private fun validEmail(target: String?): Boolean {
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        //val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        val emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         val pattern = Pattern.compile(emailPattern)
         return !TextUtils.isEmpty(target) && pattern.matcher(target).matches()
     }

@@ -1,7 +1,6 @@
 package com.rafayee.RHAttorney.AppointmentInfoModule
 
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,13 +8,14 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RH.MenuModule.View.UpdatePasswordActivity
-import com.rafayee.RHAttorney.Login.LoginResponseController
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.rafayee.RHAttorney.Login.Model.LoginResponseModel
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
 
 class AppointmentInfoActivity : AppCompatActivity() {
+    lateinit var  loginResponseModel: LoginResponseModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_appointment_info)
@@ -31,8 +31,10 @@ class AppointmentInfoActivity : AppCompatActivity() {
             startActivity(Intent(this, InviteOtherPeopleActivity::class.java))
 
         })
+        loginResponseModel = Gson().fromJson(getSharedPreferences("LoginPref", 0).getString("userInfo", ""),
+            object : TypeToken<LoginResponseModel>(){}.type)
         Glide.with(this)
-            .load(ServerApiCollection.IMAGE_URL+ LoginResponseController.myObj?.loginResponseModel!!.clientInfo!!.profilePic)
+            .load(ServerApiCollection.IMAGE_URL+ loginResponseModel.attorneysList.get(0).profilePic)
             .placeholder(R.drawable.profile_ic)
             .into(circleImage)
 
@@ -46,19 +48,6 @@ class AppointmentInfoActivity : AppCompatActivity() {
             onBackPressed()
         })
 
-/*
-        btnAttend.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(this, InviteOtherPeopleActivity::class.java))
-        })
-*/
-
     }
-/*
-    override fun onBackPressed() {
-        startActivity(Intent(this, HomeWithBottomTabsActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY))
-        super.onBackPressed()
-
-    }
-*/
 
 }

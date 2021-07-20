@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rafayee.RH.Login.View.LoginActivity">
+    android:background="@drawable/group"
+    tools:context=".Login.View.LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,15 +15,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/group">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="32dp"
-                android:src="@drawable/back_white" />
+                android:src="@drawable/back_white"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -195,6 +196,7 @@
                                     android:layout_marginTop="26dp">
 
                                     <LinearLayout
+                                        android:id="@+id/li_finger"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="7dp"
@@ -220,6 +222,7 @@
                                     </LinearLayout>
 
                                     <LinearLayout
+                                        android:id="@+id/li_face"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentEnd="true"

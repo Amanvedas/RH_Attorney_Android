@@ -14,8 +14,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.rafayee.RH.MenuModule.Presenter.AlertDialogPresenter
 import com.rafayee.RHAttorney.HomeFragmentModule.Adapter.ClientInfoAdapter
+import com.rafayee.RHAttorney.MenuModule.Presenter.AlertDialogPresenter
 import com.rafayee.RHAttorney.R
 
 

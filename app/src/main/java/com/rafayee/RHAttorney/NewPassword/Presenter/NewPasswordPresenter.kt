@@ -1,23 +1,21 @@
-package com.rafayee.RH.NewPassword.Presenter
+package com.rafayee.RHAttorney.NewPassword.Presenter
 
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
-import com.rafayee.RH.NewPassword.View.PasswordResetSuccussfully
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.rafayee.RH.MenuModule.PasswordUpdateSuccessfully
-import com.rafayee.RH.NewPassword.View.NewPassword
 import com.rafayee.RHAttorney.Helpers.ProgressDialog
+import com.rafayee.RHAttorney.MenuModule.PasswordUpdateSuccessfully
+import com.rafayee.RHAttorney.NewPassword.View.PasswordResetSuccussfully
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
-import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
+import com.vedas.apna.ServerConnections.AppStatus
 import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.regex.Pattern
 
 class NewPasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
@@ -25,8 +23,7 @@ class NewPasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
     lateinit var cnfPwd: TextInputEditText
     lateinit var context: Context
     lateinit var emilID: String
-    lateinit var strFrom: String
-    var progressDialog: ProgressDialog = ProgressDialog()
+    var strFrom: String = ""
 
     fun NewPasswordInstance(
         context: Context,
@@ -40,7 +37,7 @@ class NewPasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
         this.cnfPwd = cnfPwd
     }
 
-    fun validations(str: String) {
+    /*fun validations(str: String) {
         Log.e("ododod", "lll " + str)
         strFrom = str
         Log.e("ododod", "ll " + strFrom)
@@ -104,24 +101,48 @@ class NewPasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
             ).show()
         }
 
+    }*/
+
+    fun validations(context: Context,str: String) {
+        this.context = context
+        Log.e("ododod", "lll " + str)
+        this.strFrom = str
+        Log.e("ododod", "ll " + strFrom)
+
+        if(newPwd.text?.trim()?.isEmpty()!!){
+            newPwd.requestFocus()
+            Toast.makeText(context,"Enter new password", Toast.LENGTH_SHORT).show()
+        }else if(cnfPwd.text?.trim()?.isEmpty()!!){
+            cnfPwd.requestFocus()
+            Toast.makeText(context,"Enter confirm password", Toast.LENGTH_SHORT).show()
+        }else if (!isValidPassword(newPwd.text.toString())){
+            newPwd.requestFocus()
+            Toast.makeText(context,"New Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.", Toast.LENGTH_SHORT).show()
+        }else if (!isValidPassword(cnfPwd.text.toString())){
+            cnfPwd.requestFocus()
+            Toast.makeText(context,"Confirm Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.", Toast.LENGTH_SHORT).show()
+        } else if(newPwd.text.toString().equals(cnfPwd.text.toString())){
+            if (AppStatus.getInstance(context).isConnected()) {
+                ProgressDialog.getInstance().showProgress(context)
+                resetPassword(cnfPwd.text.toString())
+            } else {
+                Toast.makeText(context, "No Internet Connection!!!!", Toast.LENGTH_SHORT).show()
+            }
+            //context.startActivity(Intent(context, PasswordResetSuccussfully::class.java))
+        }else{
+            cnfPwd.requestFocus()
+            Toast.makeText(context,"Password not matched", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun isValidPassword(password: String?): Boolean {
-        /* val pattern: Pattern
-         val matcher: Matcher
-         val PASSWORD_PATTERN =
-             "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
-         pattern = Pattern.compile(PASSWORD_PATTERN)
-         matcher = pattern.matcher(password)
-         return matcher.matches()*/
         val expression = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@!%*?&#])(?=\\S+$)[A-Za-z\\d$@!%*?&#]{8,13}"
         val pattern = Pattern.compile(expression)
         return !TextUtils.isEmpty(password) && pattern.matcher(password).matches()
     }
 
     fun resetPassword(str: String) {
-        progressDialog.showProgress(context)
-        var passwordObject: JsonObject = JsonObject()
+        var passwordObject = JsonObject()
         val jsonObject = JSONObject()
 
         try {
@@ -132,52 +153,51 @@ class NewPasswordPresenter : RetrofitCallbacks.ServerResponseInterface {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        //  RetrofitCallbacks.getInstace().forgotCallBack(context,forgotObject)
-
-        val password: Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-        val passwordConnection =
-            password.create(
-                ServerApiCollection::class.java
-            )
-
-        val call = passwordConnection.resetPassword(passwordObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("ResetPassword", call)
-
+        Log.e("LOGINJSONss:", " $passwordObject")
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/reset_password",passwordObject,"ResetPassword")
     }
 
     override fun failureCallBack(failureMsg: String?) {
-        progressDialog.hideProgress()
-        //  TODO("Not yet implemented")
+        Log.e("newpassword:", " $failureMsg")
+        Toast.makeText(context,failureMsg,Toast.LENGTH_SHORT).show()
+        ProgressDialog.getInstance().hideProgress()
     }
-
     override fun successCallBack(body: String?, from: String?) {
-        progressDialog.hideProgress()
-
-        if (from.equals("ResetPassword")) {
-            Log.e("strFrom", "from:: " + strFrom)
-            if (strFrom.equals("")) {
-                strFrom = "normal"
-            }
-            val otpObject: JSONObject = JSONObject(body)
-            Log.e("ressss", "oo:: " + otpObject)
-            if (otpObject.get("response").equals(3)) {
-               /* Toast.makeText(context, otpObject.get("message").toString(), Toast.LENGTH_LONG)
-                    .show()*/
-                if (strFrom.equals("update")) {
-                    context.startActivity(Intent(context, PasswordUpdateSuccessfully::class.java))
-
-                } else {
-                    context.startActivity(Intent(context, PasswordResetSuccussfully::class.java))
-
+        var jsonObject: JSONObject? = null
+        try {
+            jsonObject = JSONObject(body)
+            if (jsonObject.getString("response").equals("3")){
+                if (from.equals("ResetPassword")) {
+                    ProgressDialog.getInstance().hideProgress()
+                    if (preferenceFileExist("LoginPref")) {
+                        context.getSharedPreferences("LoginPref", 0).edit()
+                            .putString("password", cnfPwd.text.toString()).apply()
+                    }
+                    if (strFrom.equals("")) {
+                        strFrom = "normal"
+                    }
+                    if (strFrom.equals("update")) {
+                        context.startActivity(
+                            Intent(context, PasswordUpdateSuccessfully::class.java
+                            )/*.putExtra("from",page)*/
+                        )
+                    } else {
+                        context.startActivity(
+                            Intent(
+                                context,
+                                PasswordResetSuccussfully::class.java
+                            )
+                        )
+                    }
                 }
-            } else if (otpObject.get("response").equals(0)) {
-                Toast.makeText(context, otpObject.get("message").toString(), Toast.LENGTH_LONG)
-                    .show()
-
             }
+        } catch (e: JSONException) {
+            e.printStackTrace()
         }
-
+    }
+    private fun preferenceFileExist(fileName: String): Boolean {
+        val f = File("/data/data/" + context.getPackageName() + "/shared_prefs/"
+                + fileName + ".xml");
+        return f.exists()
     }
 }

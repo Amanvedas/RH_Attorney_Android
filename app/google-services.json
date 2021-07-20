@@ -1,0 +1,104 @@
+{
+  "project_info": {
+    "project_number": "340242889123",
+    "project_id": "rh-app-ed487",
+    "storage_bucket": "rh-app-ed487.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340242889123:android:4fd0e6881daf7448178216",
+        "android_client_info": {
+          "package_name": "com.rafayee.RHAttorney"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340242889123-4l9aae2ojho3o3fh5uerdf97vo3qki2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOVA_XrKTpSQvH8DRv0Of6llosjnm0n4U"
+        },
+        {
+          "current_key": "AIzaSyDGNmbZNEcsInIDrum1YACwezGKCPFk0tA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340242889123-4l9aae2ojho3o3fh5uerdf97vo3qki2s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "340242889123-gs15ogg9tshl9bv9oembq260325qgv08.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.RobinsonHenry.RH"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340242889123:android:b98091a2d1d0d984178216",
+        "android_client_info": {
+          "package_name": "com.rafayee.RHCustomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340242889123-kga5udu6ighr164qeuvvfs86iglp1ap2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rafayee.RHCustomer",
+            "certificate_hash": "83e0c49c6ed06d297591ef81ec10327eebfcdb10"
+          }
+        },
+        {
+          "client_id": "340242889123-ubmk0kjl4sffpabqdo102f1sofihdu2d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rafayee.RHCustomer",
+            "certificate_hash": "7701e58e81c4f6e7e06883e7fa75b488893ee68f"
+          }
+        },
+        {
+          "client_id": "340242889123-4l9aae2ojho3o3fh5uerdf97vo3qki2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOVA_XrKTpSQvH8DRv0Of6llosjnm0n4U"
+        },
+        {
+          "current_key": "AIzaSyDGNmbZNEcsInIDrum1YACwezGKCPFk0tA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340242889123-4l9aae2ojho3o3fh5uerdf97vo3qki2s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "340242889123-gs15ogg9tshl9bv9oembq260325qgv08.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.RobinsonHenry.RH"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

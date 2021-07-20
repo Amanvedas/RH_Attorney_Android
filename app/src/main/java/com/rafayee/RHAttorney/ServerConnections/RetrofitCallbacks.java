@@ -125,25 +125,49 @@ public class RetrofitCallbacks {
         });
     }
 
-    public void apiCallBacks(String strFrom,Call<ResponseBody> call){
+    public void apiCallBacks(final Context context, String EndUrl,JsonObject jsonobj,String strFrom){
+        this.context = context;
+        ServerApiCollection apiCollection = getClient().create(ServerApiCollection.class);
+        Call<ResponseBody> call = apiCollection.PostDataFromServer(EndUrl,jsonobj);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String responseData = new String(response.body().bytes());
+            public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
+                if (response.body() != null) {
+                    String bodyString = null;
+                    JSONObject jsonObject = null;
+                    try {
+                        bodyString = new String(response.body().bytes());
+                        jsonObject = new JSONObject(bodyString);
+                        if (jsonObject.getString("response").equals("3")) {
+                            serverResponseInterface.successCallBack(bodyString,strFrom);
+                        } else {
+                            Log.e("response ", "messsage ::: "+jsonObject.getString("message"));
+                            serverResponseInterface.failureCallBack(jsonObject.getString("message"));
+                        }
+                    } catch (JSONException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Log.e("nullll","jjddjnj"+response.code());
+                }
+                /*try {
+                    String responseData = null;
+                    if (response.body() != null) {
+                        responseData = new String(response.body().bytes());
+                    }
                     Log.e("response","rerr"+strFrom);
 
                     serverResponseInterface.successCallBack(responseData,strFrom);
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("response","ee "+t.getMessage());
-
+                serverResponseInterface.failureCallBack(t.getMessage());
             }
         });
 
@@ -151,7 +175,7 @@ public class RetrofitCallbacks {
 
 
 
-    public void OTPApiCall(Context context,JsonObject jsonObject){
+   /* public void OTPApiCall(Context context,JsonObject jsonObject){
 
         this.context = context;
         ServerApiCollection loginConection = getClient().create(ServerApiCollection.class);
@@ -170,7 +194,7 @@ public class RetrofitCallbacks {
         });
 
     }
-
+*/
 
     public void ApiCallbacksGet(final Context context, String EndUrl, final String from) {
         Log.e("sas",from);

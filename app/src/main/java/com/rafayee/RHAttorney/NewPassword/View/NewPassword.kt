@@ -1,15 +1,14 @@
-package com.rafayee.RH.NewPassword.View
+package com.rafayee.RHAttorney.NewPassword.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
-import com.rafayee.RH.NewPassword.Presenter.NewPasswordPresenter
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.rafayee.RH.Utils.FocusChangeListener
+import com.rafayee.RHAttorney.NewPassword.Presenter.NewPasswordPresenter
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
+import com.rafayee.RHAttorney.Utils.FocusChangeListener
 
 class NewPassword : AppCompatActivity() {
     lateinit var back:ImageView
@@ -26,28 +25,19 @@ class NewPassword : AppCompatActivity() {
         supportActionBar?.hide()
         initVar()
         val bundle: Bundle? = intent.extras
-        val string: String? = intent.getStringExtra("strEmail")
-        var stringFrom : String?=intent.getStringExtra("update")
+        val email: String = intent.getStringExtra("strEmail").toString()
+        var stringFrom : String= intent.getStringExtra("update").toString()
         presenter= NewPasswordPresenter()
-        if (string != null) {
-            presenter.NewPasswordInstance(this,string,newPwd, cnfPwd)
-        }
+        presenter.NewPasswordInstance(this@NewPassword,email,newPwd, cnfPwd)
         RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
         done.setOnClickListener{
+            RetrofitCallbacks.getInstace().initializeServerInterface(presenter)
             if (stringFrom!=null){
-                stringFrom?.let { it1 -> presenter.validations(it1) }
+                presenter.validations(this@NewPassword,stringFrom)
             }else{
                 stringFrom=""
-                stringFrom?.let { it1 -> presenter.validations(it1) }
-
+                presenter.validations(this@NewPassword,stringFrom)
             }
-
-/*
-            if (stringFrom != null) {
-                presenter.validations(stringFrom)
-            }
-*/
-
         }
         back.setOnClickListener { onBackPressed() }
 

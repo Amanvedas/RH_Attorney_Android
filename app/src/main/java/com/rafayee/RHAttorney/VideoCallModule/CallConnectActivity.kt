@@ -1,4 +1,4 @@
-package com.rafayee.RH.VideoCall.View
+package com.rafayee.RHAttorney.VideoCall.View
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RH.Login.View.LoginActivity
-import com.rafayee.RHAttorney.AppointmentInfoModule.InviteOtherPeopleActivity
-import com.rafayee.RHAttorney.AppointmentInfoModule.MeetingEndedActivity
+import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RHAttorney.R
 import pl.bclogic.pulsator4droid.library.PulsatorLayout
 

@@ -1,4 +1,4 @@
-package com.rafayee.RH.MenuModule
+package com.rafayee.RHAttorney.MenuModule
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity

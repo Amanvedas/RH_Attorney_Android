@@ -1,15 +1,13 @@
 package com.rafayee.RHAttorney.HomeFragmentModule
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.rafayee.RH.AttorneyList.Adapter.AttorneyListAdapter
+import com.rafayee.RHAttorney.AttorneyList.Adapter.AttorneyListAdapter
 import com.rafayee.RHAttorney.HomeFragmentModule.Model.AttorneyList
 import com.rafayee.RHAttorney.R
 

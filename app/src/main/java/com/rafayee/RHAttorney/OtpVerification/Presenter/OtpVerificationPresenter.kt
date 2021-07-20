@@ -1,4 +1,4 @@
-package com.rafayee.RH.OtpVerification.Presenter
+package com.rafayee.RHAttorney.OtpVerification.Presenter
 
 import android.content.Context
 import android.content.Intent
@@ -7,20 +7,15 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.rafayee.RH.NewPassword.View.NewPassword
-import com.rafayee.RH.OtpVerification.View.VerificationActivity
 import com.rafayee.RHAttorney.Helpers.ProgressDialog
+import com.rafayee.RHAttorney.NewPassword.View.NewPassword
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
-import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
 import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
     lateinit var context: Context
     lateinit var strFrom : String
-    var progressDialog: ProgressDialog = ProgressDialog()
     lateinit var strEmail : String
     lateinit var ed1: EditText
     lateinit var ed2: EditText
@@ -53,10 +48,10 @@ class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
         } else {
             val strOtp:String = ed1.text.toString()+ed2.text.toString()+ed3.text.toString()+ed4.text.toString()
            Log.e("otp","is:: "+strOtp+", "+strEmail)
-            if (progressDialog.checkNetwork(context)){
+            if (ProgressDialog.getInstance().checkNetwork(context)){
                 otpVerifyApi(strEmail,strOtp)
             }else{
-                progressDialog.hideProgress()
+                ProgressDialog.getInstance().hideProgress()
                 Toast.makeText(context,"Please check your internet connection ",Toast.LENGTH_SHORT).show()
             }
 
@@ -64,7 +59,7 @@ class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
         }
     }
     fun otpVerifyApi(email:String,otp:String){
-        progressDialog.showProgress(context)
+        ProgressDialog.getInstance().showProgress(context)
         var otpObject: JsonObject = JsonObject()
         val jsonObject = JSONObject()
 
@@ -76,7 +71,7 @@ class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        val login : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
+       /* val login : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
         val loginConection =
@@ -85,12 +80,13 @@ class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
             )
 
         val call = loginConection.verifyApi(otpObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("OTP",call)
+        RetrofitCallbacks.getInstace().apiCallBacks("OTP",call)*/
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/verify",otpObject,"OTP")
     }
 
     fun forgotApi(context:Context,strF:String){
         strFrom=strF
-        progressDialog.showProgress(context)
+        ProgressDialog.getInstance().showProgress(context)
         var forgotObject: JsonObject = JsonObject()
         val jsonObject = JSONObject()
 
@@ -102,27 +98,17 @@ class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
             e.printStackTrace()
         }
 
-        val login : Retrofit = Retrofit.Builder().baseUrl(ServerApiCollection.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-        val loginConection =
-            login.create(
-                ServerApiCollection::class.java
-            )
-
-        val call = loginConection.ForgotApi(forgotObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("Resend",call)
-
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/forgotpassword",forgotObject,"Resend")
     }
 
 
     override fun failureCallBack(failureMsg: String?) {
-        progressDialog.hideProgress()
-        //TODO("Not yet implemented")
+        ProgressDialog.getInstance().hideProgress()
+        Toast.makeText(context,failureMsg,Toast.LENGTH_SHORT).show()
     }
 
     override fun successCallBack(body: String?, from: String?) {
-        progressDialog.hideProgress()
+        ProgressDialog.getInstance().hideProgress()
         Log.e("from","is:: "+from)
         if (strFrom.equals("")){
             strFrom="normal"
@@ -136,16 +122,16 @@ class OtpVerificationPresenter: RetrofitCallbacks.ServerResponseInterface {
                     .putExtra("strEmail",strEmail).putExtra("update",strFrom))
             }else if (otpObject.get("response").equals(0)){
                 Toast.makeText(context, otpObject.get("message").toString(), Toast.LENGTH_LONG).show()
-
             }
+            ProgressDialog.getInstance().hideProgress()
         }else if(from.equals("Resend")){
             val resendObject : JSONObject = JSONObject(body)
             if(resendObject.get("response").equals(3)){
                 Toast.makeText(context, resendObject.get("message").toString(), Toast.LENGTH_LONG).show()
             }else if (resendObject.get("response").equals(0)){
                 Toast.makeText(context, resendObject.get("message").toString(), Toast.LENGTH_LONG).show()
-
             }
+            ProgressDialog.getInstance().hideProgress()
         }
 
     }

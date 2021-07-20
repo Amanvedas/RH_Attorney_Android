@@ -1,11 +1,11 @@
-package com.rafayee.RH.Login.Presenter
+package com.rafayee.RHAttorney.Login.Presenter
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.os.Handler
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,141 +16,108 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.rafayee.RH.Forgot.View.ForgotActivity
-import com.rafayee.RH.HomeModule.HomeWithBottomTabsActivity
-import com.rafayee.RH.Login.View.LoginView
-import com.rafayee.RH.Utils.FocusChangeListener
-import com.rafayee.RH.Utils.PinFieldFocusChangeListener
-import com.rafayee.RH.Utils.PinInFiled
+import com.rafayee.RHAttorney.Forgot.View.ForgotActivity
 import com.rafayee.RHAttorney.Helpers.ProgressDialog
-import com.rafayee.RHAttorney.Login.LoginResponseController
-import com.rafayee.RHAttorney.Login.LoginResponseModel
+import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
+import com.rafayee.RHAttorney.Login.Model.LoginResponseController
+import com.rafayee.RHAttorney.Login.Model.LoginResponseModel
+import com.rafayee.RHAttorney.Login.View.LoginView
 import com.rafayee.RHAttorney.R
 import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
-import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
-import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection.BASE_URL
+import com.rafayee.RHAttorney.ServerConnections.SessionManager
+import com.rafayee.RHAttorney.Utils.FocusChangeListener
+import com.vedas.apna.ServerConnections.AppStatus
 import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
-import java.util.regex.Matcher
 import java.util.regex.Pattern
-import androidx.core.content.ContextCompat.getSystemService as getSystemService1
 
 
 class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
     lateinit var context:Context
     lateinit var rememberSwitch : SwitchCompat
-    var progressDialog: ProgressDialog = ProgressDialog()
     lateinit var username: TextInputEditText
     lateinit var password: TextInputEditText
     private var loginView: LoginView? = null
-    lateinit var deviceId : String
-    lateinit var deviceToken : String
-    var SP: SharedPreferences? = null
-    var filename = "Valustoringfile"
-    var SPToken: SharedPreferences? = null
-    var preferID = "TokenID"
-    lateinit var editToken: SharedPreferences.Editor
-    lateinit var editit: SharedPreferences.Editor
+
+    var isLogin: Boolean = false
+    var cameraBottomSheetDialog: BottomSheetDialog? = null
+    var pwd: TextInputEditText? = null
+    var email: TextInputEditText? = null
+    var editTextLay: LinearLayout? = null
+    var fingerPrintLay: LinearLayout? = null
+    var textSentence: TextView? = null
+    var idName: TextView? = null
+    var hintTextSensor: TextView? = null
+    var topImage: ImageView? = null
+    var bottomImage: ImageView? = null
+    var finger: Boolean? = null
+
+
     fun LoginInstance(
         context: Context,
         loginView: LoginView,
         username: TextInputEditText,
         password: TextInputEditText,
-        deviceId : String,
-        deviceToken : String,
-        rememberSwitch : SwitchCompat
+        rememberSwitch: SwitchCompat
     ){
         this.context=context
         this.username=username
         this.password=password
         this.loginView = loginView
-        this.deviceId = deviceId
-        this.deviceToken = deviceToken
         this.rememberSwitch = rememberSwitch
     }
 
     fun validations(){
-        if(username.text?.trim()?.isNotEmpty()!!){
-            if (username.text.toString().contains("@")){
-                if (validEmail(username.text.toString())){
-                    if(password.text?.trim()?.isNotEmpty()!!){
-                        if (password.text!!.length>=8 && password.text!!.length<=13){
-
-                            if (isValidPassword(password.text?.trim().toString())){
-                                Log.e("isNetwork","Connected:: "+progressDialog.checkNetwork(context))
-                                if (progressDialog.checkNetwork(context)){
-                                    LoginApi(context,username.text.toString(),password.text.toString(),deviceToken)
-                                }else{
-                                    progressDialog.hideProgress()
-                                    Toast.makeText(context,"Please check your internet connection ",Toast.LENGTH_SHORT).show()
-
-                                }
-                                //LoginApi(context,username.text.toString(),password.text.toString(),"d2","dt5")
-                            }else{
-                                Toast.makeText(context,"Password at least have 1 uppercase and lower case ,special character ",Toast.LENGTH_SHORT).show()
-                            }
-                        }else{
-                            Toast.makeText(context,"Password at least have 8 to 13 characters ",Toast.LENGTH_SHORT).show()
-
-                        }
-                        Log.e("length","is:: "+ password.text!!.length)
-                        // showCustomDialogSuccess()
-                    }else{
-                        loginView?.notifyUser("Enter password")
-                    }
-                }else{
-                    loginView?.notifyUser("Enter valid email id")
+        if (username.text?.trim()?.isNotEmpty()!!) {
+            if(username.text.toString().contains("@")){
+                if (validEmail(username.text.toString())) {
+                    nextFunctions()
+                } else {
+                    username.requestFocus()
+                    loginView?.notifyUser("Enter valid email")
                 }
-
-            }
-            else{
-                if (username.text.toString().length==10){
-                    if (isValidPhoneallzeros(username.text.toString())){
-                        if(password.text?.trim()?.isNotEmpty()!!){
-                            if (password.text!!.length>=8 && password.text!!.length<=13){
-
-                                if (isValidPassword(password.text?.trim().toString())){
-                                    Log.e("isNetwork","Connected:: "+progressDialog.checkNetwork(context))
-                                    if (progressDialog.checkNetwork(context)){
-                                        LoginApi(context,username.text.toString(),password.text.toString(),deviceToken)
-                                    }else{
-                                        progressDialog.hideProgress()
-                                        Toast.makeText(context,"Please check your internet connection ",Toast.LENGTH_SHORT).show()
-
-                                    }
-                                    //LoginApi(context,username.text.toString(),password.text.toString(),"d2","dt5")
-                                }else{
-                                    Toast.makeText(context,"Password at least have 1 uppercase and lower case ,special character ",Toast.LENGTH_SHORT).show()
-                                }
-                            }else{
-                                Toast.makeText(context,"Password at least have 8 to 13 characters ",Toast.LENGTH_SHORT).show()
-
-                            }
-                            Log.e("length","is:: "+ password.text!!.length)
-                            // showCustomDialogSuccess()
-                        }else{
-                            loginView?.notifyUser("Enter password")
-                        }
-
-                    }else{
-                        Toast.makeText(context,"Phone number must have 10 digits(all zero's doesn't allow)",Toast.LENGTH_SHORT).show()
-
-                    }
-
-                }else{
-                    Toast.makeText(context,"Enter valid phone number",Toast.LENGTH_SHORT).show()
-
+            }else{
+                if (isValidPhoneallzeros(username.text.toString())) {
+                    nextFunctions()
+                } else {
+                    username.requestFocus()
+                    loginView?.notifyUser("Phone number must have 10 digits(all zero's doesn't allow)")
                 }
             }
-
-        }else{
+        } else {
+            username.requestFocus()
             loginView?.notifyUser("Enter email/phone number")
+        }
+    }
+    private fun nextFunctions() {
+        if (password.text?.trim()?.isNotEmpty()!!) {
+            if (isValidPassword(password.text.toString().trim())){
+                if (AppStatus.getInstance(context).isConnected()) {
+                    ProgressDialog.getInstance().showProgress(context)
+                    Handler().postDelayed({
+                        loginApi(
+                            context,
+                            username.text.toString(),
+                            password.text.toString(),
+                            "login"
+                        )
+                    }, 1000)
+                } else {
+                    Toast.makeText(context, "No Internet Connection!!!!", Toast.LENGTH_SHORT).show()
+                }
+                //showCustomDialogSuccess()
+            } else {
+                password.requestFocus()
+                loginView?.notifyUser("Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.")
+            }
+        } else {
+            password.requestFocus()
+            loginView?.notifyUser("Enter password")
         }
     }
 
@@ -168,91 +135,86 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        RetrofitCallbacks.getInstace().OTPApiCall(context,otpObject)
+        //RetrofitCallbacks.getInstace().OTPApiCall(context,otpObject)
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/login",otpObject,"login_bottom")
     }
 
     fun isValidPassword(password: String?): Boolean {
-       /* val pattern: Pattern
-        val matcher: Matcher
-        val PASSWORD_PATTERN =
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
-        pattern = Pattern.compile(PASSWORD_PATTERN)
-        matcher = pattern.matcher(password)
-        return matcher.matches()*/
         val expression = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@!%*?&#])(?=\\S+$)[A-Za-z\\d$@!%*?&#]{8,13}"
         val pattern = Pattern.compile(expression)
         return !TextUtils.isEmpty(password) && pattern.matcher(password).matches()
     }
-
-    fun LoginApi(context:Context,email:String,password:String,deviceToken:String){
-        progressDialog.showProgress(context)
-        var loginObject:JsonObject = JsonObject()
+    public fun loginApi(context: Context, usrname: String, password: String, from: String) {
+        var loginObj = JsonObject()
         val jsonObject = JSONObject()
 
+        val token = FirebaseInstanceId.getInstance().token
+        Log.e("firebaseTokenInLogin", ":=$token")
+        val ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID)
         try {
-            jsonObject.put("emailID", email)
-            jsonObject.put("password",password)
-            jsonObject.put("deviceID",deviceId)
-            jsonObject.put("deviceToken",deviceToken)
-            jsonObject.put("deviceType","mobile")
+            jsonObject.put("emailID", usrname)
+            jsonObject.put("password", password)
+            jsonObject.put("deviceID", ID)
+            jsonObject.put("deviceToken", token)
+            jsonObject.put("deviceType", "mobile")
             val jsonParser = JsonParser()
-            loginObject = jsonParser.parse(jsonObject.toString()) as JsonObject
+            loginObj = jsonParser.parse(jsonObject.toString()) as JsonObject
+
+            //print parameter
+            Log.e("LOGINJSONss:", " $loginObj")
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-      //  RetrofitCallbacks.getInstace().loginCallBacks(context,loginObject)
-        val login : Retrofit = Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
-        val loginConection =
-            login.create(
-                ServerApiCollection::class.java
-            )
-
-        val call = loginConection.LoginApi(loginObject)
-        RetrofitCallbacks.getInstace().apiCallBacks("Login",call)
-
+        RetrofitCallbacks.getInstace().apiCallBacks(context,"attorney/login",loginObj,from)
     }
 
-    private fun showCustomDialogSuccess() {
-        val dialog = Dialog(context)
-        dialog.setContentView(R.layout.verification)
-        dialog.setTitle("Title...")
+    fun fetch(context: Context, Email: String, from: String) {
+        this.context = context
+        var regObj = JsonObject()
+        val jsonObject = JSONObject()
 
+        try {
+            jsonObject.put("emailID", Email)
+            val jsonParser = JsonParser()
+            regObj = jsonParser.parse(jsonObject.toString()) as JsonObject
+            //print parameter
+            Log.e("RegisterJSON:", " $regObj")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        RetrofitCallbacks.getInstace().apiCallBacks(context, "attorney/FetchAttorney", regObj, from)
+    }
+
+    fun showEnableSuccess(error: String, finger: Boolean) {
+        val dialog = Dialog(context)
+        dialog.setContentView(R.layout.enable_ids_dialog)
         dialog.setCancelable(false)
         dialog.setCanceledOnTouchOutside(false)
-        var code:String
-        val ed1: EditText = dialog.findViewById(R.id.ed1)
-        val ed2: EditText = dialog.findViewById(R.id.ed2)
-        val ed3: EditText = dialog.findViewById(R.id.ed3)
-        val ed4: EditText = dialog.findViewById(R.id.ed4)
-        val verify: ImageView = dialog.findViewById(R.id.verify)
+        var dontAllow: ImageView
+        var ok: ImageView
+        var headingText: TextView
+        var li_error: LinearLayout
 
-        PinInFiled(context,ed1,ed2,ed3,ed4)
+        dontAllow = dialog.findViewById(R.id.dontAllow)
+        ok = dialog.findViewById(R.id.ok)
+        headingText = dialog.findViewById(R.id.heading)
+        li_error = dialog.findViewById(R.id.li_error)
+        li_error.visibility = View.VISIBLE
+        dontAllow.setImageDrawable(context.resources.getDrawable(R.drawable.cancel_btn))
+        ok.setImageDrawable(context.resources.getDrawable(R.drawable.tryagain))
+        headingText.text = error
 
-        PinFieldFocusChangeListener(context,ed1,3,3,0,0,5,5,5,5)
-        PinFieldFocusChangeListener(context,ed2,3,3,0,0,5,5,5,5)
-        PinFieldFocusChangeListener(context,ed3,3,3,0,0,5,5,5,5)
-        PinFieldFocusChangeListener(context,ed4,3,3,0,0,5,5,5,5)
+        dontAllow.setOnClickListener {
+            dialog.dismiss()
+            cameraBottomSheetDialog?.dismiss()
+        }
 
-        verify.setOnClickListener {
-            if(ed1.text?.trim()?.isEmpty()!!) {
-                ed1.requestFocus()
-                Toast.makeText(context,"Enter valid pin",Toast.LENGTH_SHORT).show()
-            }else if(ed2.text?.trim()?.isEmpty()!!){
-                ed2.requestFocus()
-                Toast.makeText(context,"Enter valid pin",Toast.LENGTH_SHORT).show()
-            } else if(ed3.text?.trim()?.isEmpty()!!){
-                ed3.requestFocus()
-                Toast.makeText(context,"Enter valid pin",Toast.LENGTH_SHORT).show()
-            }else if(ed4.text?.trim()?.isEmpty()!!){
-                ed4.requestFocus()
-                Toast.makeText(context,"Enter valid pin",Toast.LENGTH_SHORT).show()
-            }else{
-                dialog.dismiss()
-                otpAPI(context,"bharath.civil123@gmail.com","1234")
-                context.startActivity(Intent(context, HomeWithBottomTabsActivity::class.java))
-
+        ok.setOnClickListener {
+            dialog.dismiss()
+            if (finger) {
+                loginView?.finger(context, cameraBottomSheetDialog!!)
+            } else {
+                loginView?.face(context, cameraBottomSheetDialog!!)
             }
         }
         dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -260,93 +222,151 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
     }
 
     fun bottomSheet(context: Context, finger: Boolean) {
-        val cameraBottomSheetDialog = BottomSheetDialog(Objects.requireNonNull(context), R.style.BottomSheetDialogTheme)
-        val dialogView: View = LayoutInflater.from(context).inflate(R.layout.bottom_sheet_layout, null)
-        cameraBottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        this.finger = finger
+        cameraBottomSheetDialog =
+            BottomSheetDialog(Objects.requireNonNull(context), R.style.BottomSheetDialogTheme)
+        val dialogView: View =
+            LayoutInflater.from(context).inflate(R.layout.bottom_sheet_layout, null)
+        cameraBottomSheetDialog!!.behavior.state = BottomSheetBehavior.STATE_EXPANDED
 
-        val hintTextSensor: TextView = dialogView.findViewById(R.id.hintTextSensor)
-        val idName: TextView = dialogView.findViewById(R.id.idName)
-        val bottomImage: ImageView = dialogView.findViewById(R.id.bottomImage)
+        hintTextSensor = dialogView.findViewById(R.id.hintTextSensor)
+        idName = dialogView.findViewById(R.id.idName)
+        bottomImage = dialogView.findViewById(R.id.bottomImage)
         val back: ImageView = dialogView.findViewById(R.id.back)
         val login: ImageView = dialogView.findViewById(R.id.login)
-        val editTextLay: LinearLayout = dialogView.findViewById(R.id.editTextLay)
-        val fingerPrintLay: LinearLayout = dialogView.findViewById(R.id.fingerPrintLay)
-        val textSentence: TextView = dialogView.findViewById(R.id.textSentence)
+        editTextLay = dialogView.findViewById(R.id.editTextLay)
+        fingerPrintLay = dialogView.findViewById(R.id.fingerPrintLay)
+        textSentence = dialogView.findViewById(R.id.textSentence)
         val forgot: TextView = dialogView.findViewById(R.id.forgot)
-        val topImage: ImageView = dialogView.findViewById(R.id.topImage)
+        topImage = dialogView.findViewById(R.id.topImage)
         val cardEmail: TextInputLayout = dialogView.findViewById(R.id.cardEmail)
         val cardPwd: TextInputLayout = dialogView.findViewById(R.id.cardPwd)
-        val email: TextInputEditText = dialogView.findViewById(R.id.email)
-        val pwd: TextInputEditText = dialogView.findViewById(R.id.pwd)
+        email = dialogView.findViewById(R.id.email)
+        pwd = dialogView.findViewById(R.id.pwd)
 
-        FocusChangeListener(context,cardEmail, email,0,0,10,5,5,5,10,5)
-        FocusChangeListener(context,cardPwd, pwd,0,0,10,5,5,5,10,5)
+        FocusChangeListener(context, cardEmail, email!!, 0, 0, 10, 5, 5, 5, 10, 5)
+        FocusChangeListener(context, cardPwd, pwd!!, 0, 0, 10, 5, 5, 5, 10, 5)
 
-        if (finger) {
-            idName.text = "Touch ID"
-            hintTextSensor.text = "Touch the fingerprint sensor"
-            textSentence.text = "To enable Touch ID please first login to R&H"
-            topImage.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_2))
-            bottomImage.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_3))
+        /*if (finger) {
+            idName?.text = "Touch ID"
+            hintTextSensor?.text = "Touch the fingerprint sensor"
+            textSentence?.text = "To enable Touch ID please\nfirst login to R&H"
+            topImage?.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_2))
+            bottomImage?.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_3))
         } else {
-            idName.text = "Face ID"
-            hintTextSensor.text = "Look directly at your front camera"
-            textSentence.text = "To enable Face ID please first login to R&H"
-            topImage.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_2))
-            bottomImage.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_3))
-        }
-        back.setOnClickListener { cameraBottomSheetDialog.dismiss() }
+            idName?.text = "Face ID"
+            hintTextSensor?.text = "Look directly at your front camera"
+            textSentence?.text = "To enable Face ID please\nfirst login to R&H"
+            topImage?.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_2))
+            bottomImage?.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_3))
+        }*/
+        back.setOnClickListener { cameraBottomSheetDialog!!.dismiss() }
         forgot.setOnClickListener {
-            cameraBottomSheetDialog.dismiss()
+            cameraBottomSheetDialog!!.dismiss()
             context.startActivity(Intent(context, ForgotActivity::class.java))
         }
-        login.setOnClickListener {
-            if (email.text?.trim()?.isNotEmpty()!!) {
-                if (validEmail(email.text.toString())) {
-                    if (pwd.text?.trim()?.isNotEmpty()!!) {
-                        if (finger) {
-                            editTextLay.visibility = View.GONE
-                            fingerPrintLay.visibility = View.VISIBLE
-                            textSentence.text = "Login to R&H"
-                            idName.text = "Touch ID"
-                            hintTextSensor.text = "Touch the fingerprint sensor"
-                            topImage.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_2))
-                            bottomImage.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_3))
-                            loginView?.finger(context)
+        if (isLogin) {
+            if (finger == true) {
+                /*editTextLay?.visibility = View.GONE
+                fingerPrintLay?.visibility = View.VISIBLE
+                textSentence?.text = "Login to R&H"
+                idName?.text = "Touch ID"
+                hintTextSensor?.text = "Touch the fingerprint sensor"
+                topImage?.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_2))
+                bottomImage?.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_3))*/
+                cameraBottomSheetDialog!!.dismiss()
+                loginView?.finger(context, cameraBottomSheetDialog!!)
+            } else {
+                /*editTextLay?.visibility = View.GONE
+                fingerPrintLay?.visibility = View.VISIBLE
+                textSentence?.text = "Login to R&H"
+                idName?.text = "Face ID"
+                hintTextSensor?.text = "Look directly at your front camera"
+                topImage?.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_2))
+                bottomImage?.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_3))*/
+                cameraBottomSheetDialog!!.dismiss()
+                loginView?.face(context, cameraBottomSheetDialog!!)
+            }
+        }else{
+            if (finger) {
+                idName?.text = "Touch ID"
+                hintTextSensor?.text = "Touch the fingerprint sensor"
+                textSentence?.text = "To enable Touch ID please\nfirst login to R&H"
+                topImage?.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_2))
+                bottomImage?.setImageDrawable(context.resources.getDrawable(R.drawable.fingerprint_3))
+            } else {
+                idName?.text = "Face ID"
+                hintTextSensor?.text = "Look directly at your front camera"
+                textSentence?.text = "To enable Face ID please\nfirst login to R&H"
+                topImage?.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_2))
+                bottomImage?.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_3))
+            }
+            if (context.getSharedPreferences("LoginPref", 0).getBoolean("isRemember", false)) {
+                email!!.setText(context.getSharedPreferences("LoginPref", 0).getString("emailID", ""))
+                pwd!!.setText(context.getSharedPreferences("LoginPref", 0).getString("password", ""))
+                email!!.requestFocus()
+                pwd!!.requestFocus()
+            }
 
+            login.setOnClickListener {
+                if (email!!.text?.trim()?.isNotEmpty()!!) {
+                    if (validEmail(email!!.text.toString())) {
+                        if (pwd!!.text?.trim()?.isNotEmpty()!!) {
+                            if (isValidPassword(pwd!!.text.toString())){
+                                if (AppStatus.getInstance(context).isConnected()) {
+                                    ProgressDialog.getInstance().showProgress(context)
+                                    Handler().postDelayed({
+                                        loginApi(
+                                            context,
+                                            email!!.text.toString(),
+                                            pwd!!.text.toString(),
+                                            "login_bottom"
+                                        )
+                                    }, 1000)
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "No Internet Connection!!!!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            } else {
+                                pwd!!.requestFocus()
+                                Toast.makeText(
+                                    context,
+                                    "Password length must be minimum 8 and maximum 13 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number, 1 Special Character and Spaces not allowed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         } else {
-                            editTextLay.visibility = View.GONE
-                            fingerPrintLay.visibility = View.VISIBLE
-                            textSentence.text = "Login to R&H"
-                            idName.text = "Face ID"
-                            hintTextSensor.text = "Look directly at your front camera"
-                            topImage.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_2))
-                            bottomImage.setImageDrawable(context.resources.getDrawable(R.drawable.face_id_3))
-                            loginView?.face(context)
+                            pwd!!.requestFocus()
+                            Toast.makeText(context, "Enter password", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(context, "Enter password", Toast.LENGTH_SHORT).show()
+                        email!!.requestFocus()
+                        Toast.makeText(context, "Enter valid email", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Enter valid email", Toast.LENGTH_SHORT).show()
+                    email!!.requestFocus()
+                    Toast.makeText(context, "Enter email", Toast.LENGTH_SHORT).show()
                 }
-            } else {
-                Toast.makeText(context, "Enter email", Toast.LENGTH_SHORT).show()
             }
+            cameraBottomSheetDialog!!.setContentView(dialogView)
+            cameraBottomSheetDialog!!.show()
         }
-        cameraBottomSheetDialog.setContentView(dialogView)
-        cameraBottomSheetDialog.show()
+
     }
 
     private fun validEmail(target: String?): Boolean {
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        //val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        val emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         val pattern = Pattern.compile(emailPattern)
         return !TextUtils.isEmpty(target) && pattern.matcher(target).matches()
     }
 
     override fun failureCallBack(failureMsg: String?) {
-        progressDialog.hideProgress()
-        //("Not yet implemented")
+        ProgressDialog.getInstance().hideProgress()
+        Toast.makeText(context,failureMsg,Toast.LENGTH_SHORT).show()
     }
     fun isValidPhoneallzeros(phone: String?): Boolean {
         val expression = "^(?!0+$)\\d*$"  /*"^(?!0+$)\\d{10,}$"*/
@@ -355,46 +375,83 @@ class LoginPresenter: RetrofitCallbacks.ServerResponseInterface {
                 && pattern.matcher(phone).matches()
     }
     override fun successCallBack(body: String?, from: String?) {
-        progressDialog.hideProgress()
-        if (from.equals("Login")){
-            Log.e("ressss","ff:: "+body)
-            val loginObject : JSONObject = JSONObject(body)
-            Log.e("ressss","oo:: "+loginObject)
-            if (loginObject.get("response").equals(3)){
-                SP = context.getSharedPreferences(filename, 0);
-                SPToken = context.getSharedPreferences(preferID, 0);
-                editit = SP!!.edit()
-                editToken =SPToken!!.edit()
-                if (rememberSwitch.isChecked){
-                    editToken.putString("key1", username.text.toString())
-                    editToken.putString("key2", password.text.toString())
-                   /* editit.putString("key1", username.text.toString())
-                    editit.putString("key2", password.text.toString())
+        var jsonObject: JSONObject? = null
+        try {
+            jsonObject = JSONObject(body)
+            if (jsonObject.getString("response").equals("3")) {
+                if (from.equals("login") || from.equals("login_bottom")) {
+                    if(from.equals("login_bottom")) {
+                        val pref = context.getSharedPreferences("LoginPref", 0) // 0 - for private mode
+                        val editor = pref.edit()
+                        editor.putString("accesstoken", jsonObject.getString("access_token"))
+                        editor.putString("password", pwd?.text.toString())
+                        editor.putString("emailID", jsonObject.getJSONObject("clientInfo").getString("emailID"))
+                        editor.apply()
+                        isLogin = true
+                        if (finger == true) {
+                            cameraBottomSheetDialog!!.dismiss()
+                            loginView?.finger(context, cameraBottomSheetDialog!!)
+                        } else {
+                            cameraBottomSheetDialog!!.dismiss()
+                            loginView?.face(context, cameraBottomSheetDialog!!)
+                        }
+                        ProgressDialog.getInstance().hideProgress()
+                    }else{
+                        val pref = context.getSharedPreferences("LoginPref", 0) // 0 - for private mode
+                        val editor = pref.edit()
+                        editor.putString("accesstoken", jsonObject.getString("access_token"))
+                        editor.putString("password", password.text.toString())
+                        editor.putString("emailID", jsonObject.getJSONObject("clientInfo").getString("emailID"))
+                        editor.apply()
+                        fetch(context, jsonObject.getJSONObject("clientInfo").getString("emailID").toString(), "fetch")
+                    }
+                }else if (from.equals("fetch_bottom")){
+                    val gson = Gson()
+                    val loginResponseModel: LoginResponseModel = gson.fromJson(body, LoginResponseModel::class.java)
+                    LoginResponseController.instance!!.loginResponseModel = loginResponseModel
+                    Log.e("data","res:: "+gson.toJson(LoginResponseController.myObj?.loginResponseModel))
 
-                    editit.apply()*/
-                    editToken.apply()
+                    val sessionManager = SessionManager(context)
+                    sessionManager.createLoginSession(
+                        LoginResponseController.instance!!.loginResponseModel?.attorneysList?.get(0)?.emailID
+                    )
+                    val pref = context.getSharedPreferences("LoginPref", 0) // 0 - for private mode
+                    val editor = pref.edit()
+                    LoginResponseController.myObj?.loginResponseModel?.attorneysList?.get(0)?.password = password.text.toString()
+                    editor.putString("password", pwd?.text.toString())
+                    editor.putBoolean("isRemember", rememberSwitch.isChecked)
+                    editor.putString("register_type", "Manual")
+                    editor.putString("userInfo", Gson().toJson(LoginResponseController.myObj?.loginResponseModel))
+                    editor.putString("emailID", LoginResponseController.instance!!.loginResponseModel?.attorneysList?.get(0)?.emailID)
+                    editor.apply()
+                    context.startActivity(Intent(context, HomeWithBottomTabsActivity::class.java))
+                    ProgressDialog.getInstance().hideProgress()
+                }else if (from.equals("fetch")){
+                    val gson = Gson()
+                    val loginResponseModel = gson.fromJson(body, LoginResponseModel::class.java)
+                    LoginResponseController.instance!!.loginResponseModel = loginResponseModel
+                    Log.e("data","res:: "+gson.toJson(LoginResponseController.myObj?.loginResponseModel))
 
+                    val sessionManager = SessionManager(context)
+                    sessionManager.createLoginSession(LoginResponseController.instance!!.loginResponseModel?.attorneysList?.get(0)?.emailID)
+                    val pref = context.getSharedPreferences("LoginPref", 0) // 0 - for private mode
+                    val editor = pref.edit()
+                    LoginResponseController.myObj?.loginResponseModel?.attorneysList?.get(0)?.password = password.text.toString()
+                    editor.putString("password", password.text.toString())
+                    editor.putBoolean("isRemember", rememberSwitch.isChecked)
+                    editor.putString("register_type", "Manual")
+                    editor.putString("userInfo", Gson().toJson(LoginResponseController.myObj?.loginResponseModel))
+                    editor.putString("emailID", LoginResponseController.instance!!.loginResponseModel?.attorneysList?.get(0)?.emailID)
+
+                    editor.putBoolean("enableTouchID", false)
+                    editor.putBoolean("enableFaceID", false)
+                    editor.apply()
+                    context.startActivity(Intent(context, HomeWithBottomTabsActivity::class.java))
+                    ProgressDialog.getInstance().hideProgress()
                 }
-                editit.putString("data", body)
-
-                editToken.putString("token", deviceToken)
-                editToken.putString("id", deviceId)
-                editToken.apply()
-                editit.putString("key3","isLogin")
-                editit.apply()
-
-               // Toast.makeText(context, loginObject.get("message").toString(), Toast.LENGTH_LONG).show()
-                val gson = Gson()
-                val loginResponseModel: LoginResponseModel  = gson.fromJson(body, LoginResponseModel::class.java)
-                LoginResponseController.instance!!.loginResponseModel = loginResponseModel
-                Log.e("data","res:: "+gson.toJson(LoginResponseController.myObj?.loginResponseModel))
-                context.startActivity(Intent(context, HomeWithBottomTabsActivity::class.java))
-            }else if (loginObject.get("response").equals(0)){
-                progressDialog.hideProgress()
-                Toast.makeText(context, loginObject.get("message").toString(), Toast.LENGTH_LONG).show()
             }
-
+        } catch (e: JSONException) {
+            e.printStackTrace()
         }
-
     }
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConsultationModule.ConsultationNotesActivity">
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/back_blue"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_below="@+id/back"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/toolbar_color"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Consultation Results"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/toolbar_color"
+            android:fontFamily="@font/raleway_semibold"
+            android:text="Consultation Notes"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:strokeColor="#52758B5C"
+            app:cardElevation="10dp"
+            android:layout_marginTop="5dp"
+            app:strokeWidth="1dp"
+            app:cardUseCompatPadding="true">
+            <EditText
+                android:id="@+id/ed_txt"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:textSize="12sp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp"
+                android:maxLines="7"
+                android:paddingBottom="6dp"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/proximanova_alt_regular"
+                android:textAlignment="gravity"
+                android:gravity="start|top"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:hint="Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat."
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/save_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="30dp"
+            android:textSize="11dp"
+            android:drawableRight="@drawable/next_white"
+            android:layout_gravity="end"
+            android:textAllCaps="false"
+            android:drawablePadding="17dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:fontFamily="@font/merriweather_bold"
+            android:text="Save &amp; Continue"
+            android:background="@color/toolbar_color"/>
+    </LinearLayout>
+
+</RelativeLayout>

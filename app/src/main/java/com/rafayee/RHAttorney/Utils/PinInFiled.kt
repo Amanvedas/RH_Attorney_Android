@@ -1,4 +1,4 @@
-package com.rafayee.RH.Utils
+package com.rafayee.RHAttorney.Utils
 
 import android.content.Context
 import android.text.Editable
@@ -78,7 +78,7 @@ class PinInFiled(context:Context, ed1:EditText,ed2:EditText,ed3:EditText,ed4:Edi
                     ed3.requestFocus()
 
                 }else{
-                    Toast.makeText(context,"Done", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context,"Done", Toast.LENGTH_SHORT).show()
                 }
             }
         })

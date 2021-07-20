@@ -1,4 +1,4 @@
-package com.rafayee.RH.AttorneyList.Adapter
+package com.rafayee.RHAttorney.AttorneyList.Adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,9 +10,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.rafayee.RH.Login.View.LoginActivity
 import com.rafayee.RHAttorney.AppointmentInfoModule.AppointmentInfoActivity
 
 import com.rafayee.RHAttorney.HomeFragmentModule.Model.AttorneyList
