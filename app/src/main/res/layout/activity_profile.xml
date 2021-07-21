@@ -265,6 +265,7 @@
                 android:layout_below="@id/txt_education"/>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_dot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -294,6 +295,7 @@
                     />
             </RelativeLayout>
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/rl_dot1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -331,7 +333,7 @@
                 android:text="Awards"
                 android:textColor="@color/toolbar_color"
                 android:gravity="center"
-                android:layout_below="@id/rl_dot1"
+                android:layout_below="@id/txt_education"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="15dp"
                 android:fontFamily="@font/merriweather_regular"
