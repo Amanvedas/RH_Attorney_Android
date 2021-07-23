@@ -1,27 +1,34 @@
 package com.rafayee.RHAttorney.HomeFragmentModule.Adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.rafayee.RHAttorney.AppointmentInfoModule.ClientInfoFragment
+import com.rafayee.RHAttorney.HomeFragmentModule.Model.ClienListModel
 import com.rafayee.RHAttorney.HomeFragmentModule.UsersFragment
 import com.rafayee.RHAttorney.HomeModule.FragmentInteractionListener
 import com.rafayee.RHAttorney.HomeModule.HomeWithBottomTabsActivity
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.ServerApiCollection
 import de.hdodenhof.circleimageview.CircleImageView
 
 
-class ClientInfoAdapter: RecyclerView.Adapter<ClientInfoAdapter.ViewHolder>(){
+class ClientInfoAdapter: RecyclerView.Adapter<ClientInfoAdapter.ViewHolder>(), Filterable {
     lateinit var activity: Context
-    var listNames: ArrayList<String> = ArrayList()
-
+    var listNames: List<ClienListModel.Result> = ArrayList()
     var userF : UsersFragment = UsersFragment()
     var hBT : HomeWithBottomTabsActivity = HomeWithBottomTabsActivity()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ClientInfoAdapter.ViewHolder {
@@ -29,11 +36,11 @@ class ClientInfoAdapter: RecyclerView.Adapter<ClientInfoAdapter.ViewHolder>(){
         return ViewHolder(layout)
     }
 
-    fun ClientInfoAdapter(listNames: ArrayList<String>, activity: Context) {
+    fun ClientInfoAdapter(listNames: List<ClienListModel.Result>, activity: Context) {
         this.listNames = listNames
         this.activity = activity
     }
-    fun filterList(listNames: ArrayList<String>) {
+    fun filterList(listNames: List<ClienListModel.Result>) {
         this.listNames = listNames
         notifyDataSetChanged()
     }
@@ -45,18 +52,29 @@ class ClientInfoAdapter: RecyclerView.Adapter<ClientInfoAdapter.ViewHolder>(){
     override fun onBindViewHolder(holder: ClientInfoAdapter.ViewHolder, position: Int) {
 
         var navController: NavController? = null
+
+        holder.name.text=listNames.get(position).firstName+"  "+listNames.get(position).lastName
+        Glide.with(activity)
+            .load(ServerApiCollection.IMAGE_URL+ listNames.get(position).profilePic)
+            .placeholder(R.drawable.profile_ic)
+            .into(holder.pic)
         holder.itemView.setOnClickListener(View.OnClickListener {
+           /*var bundle:Bundle
+            val newFragment = ClientInfoFragment()
+            val transaction: FragmentTransaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.main_fragment, newFragment)
+            transaction.addToBackStack(null)
+            transaction.commit()*/
+
 
           var fragment:Fragment?=null
-
-            Navigation.findNavController(holder.itemView).navigate(R.id.thired_fragment);
+           var bundle: Bundle
+            Navigation.findNavController(holder.itemView).navigate(R.id.thired_fragment)
             fragment = ClientInfoFragment()
             //replaceFragment(fragment)
             lateinit var fragmentInteractionListener : FragmentInteractionListener
             fragmentInteractionListener = activity as FragmentInteractionListener
             fragmentInteractionListener.onClickButton(ClientInfoFragment())
-
-
             /* var fragment:Fragment?=null
              fragment = ClientInfoFragment()
              userF.replaceFragment(fragment)*/
@@ -71,6 +89,27 @@ class ClientInfoAdapter: RecyclerView.Adapter<ClientInfoAdapter.ViewHolder>(){
             //   activity.startActivity(Intent(activity, ClientInfoFragment::class.java))
 
         })
+    }
+    override  fun getFilter(): Filter {
+        return object : Filter() {
+            override fun publishResults(charSequence: CharSequence?, filterResults: Filter.FilterResults) {
+                listNames = filterResults.values as List<ClienListModel.Result>
+                notifyDataSetChanged()
+            }
+
+            override fun performFiltering(charSequence: CharSequence?): Filter.FilterResults {
+                val queryString = charSequence?.toString()?.toLowerCase()
+
+                val filterResults = Filter.FilterResults()
+                filterResults.values = if (queryString==null || queryString.isEmpty())
+                    listNames
+                else
+                    listNames.filter {
+                        it.firstName!!.toLowerCase().contains(queryString)
+                    }
+                return filterResults
+            }
+        }
     }
 
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -90,6 +129,8 @@ class ClientInfoAdapter: RecyclerView.Adapter<ClientInfoAdapter.ViewHolder>(){
             seeMoreLay = v.findViewById(R.id.seeMoreLay)
         }
     }
+
+
 /*
     fun replaceFragment(someFragment: Fragment?) {
         Log.e("hgkj","khjgkj")

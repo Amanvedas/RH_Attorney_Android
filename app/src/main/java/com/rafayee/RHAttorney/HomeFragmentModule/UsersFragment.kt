@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +15,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rafayee.RHAttorney.AppointmentInfoModule.AppointmeniInfo.AppointmentInfoPresenter
 import com.rafayee.RHAttorney.HomeFragmentModule.Adapter.ClientInfoAdapter
+import com.rafayee.RHAttorney.HomeFragmentModule.Model.ClienListModel
+import com.rafayee.RHAttorney.HomeFragmentModule.userPresenter.UserFragmentPresenter
 import com.rafayee.RHAttorney.MenuModule.Presenter.AlertDialogPresenter
 import com.rafayee.RHAttorney.R
+import com.rafayee.RHAttorney.ServerConnections.RetrofitCallbacks
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,13 +36,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class UsersFragment : Fragment() {
     lateinit var alertDialogPresenter: AlertDialogPresenter
+    var listNames: List<ClienListModel.Result> = ArrayList()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-   lateinit var listNames: ArrayList<String>
     lateinit var adapter1 : ClientInfoAdapter
-
+    lateinit var presenter: UserFragmentPresenter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,43 +62,34 @@ class UsersFragment : Fragment() {
         val edtSearch : EditText = view.findViewById(R.id.edt_search)
         alertDialogPresenter = AlertDialogPresenter()
         alertDialogPresenter.AlertDialogPresenter(view.context)
-        val linearLayoutManager = LinearLayoutManager(activity)
+        presenter= UserFragmentPresenter()
+
+        context?.let { presenter.getAllClientApi(it,""+1,""+1) }
+        context?.let {
+            presenter.UserFragmentPresenter(
+                it, firstListView,
+                txtFilter,
+                edtSearch,
+                listNames
+            )
+        }
+
+
+      Log.e("vaue12","=="+listNames.size)
+      presenter.filterCall()
+     /*   val linearLayoutManager = LinearLayoutManager(activity)
        // activity?.let { adapter1.AttorneyListAdapter(it,"") }
-        listNames = ArrayList()
-        listNames.add("Client Name")
-        listNames.add("Client Name")
-        listNames.add("Client Name")
 
         adapter1 = ClientInfoAdapter()
+        Log.e("value11","=="+ listNames.size)
         activity?.let { adapter1.ClientInfoAdapter(listNames,view.context) }
         firstListView.layoutManager=linearLayoutManager
-        firstListView.adapter=adapter1
+        firstListView.adapter=adapter1*/
 
         txtFilter.setOnClickListener(View.OnClickListener {
             alertDialogPresenter.filterAlertDialog()
         })
-        edtSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                charSequence: CharSequence,
-                i: Int,
-                i1: Int,
-                i2: Int
-            ) {
-            }
 
-            override fun onTextChanged(
-                charSequence: CharSequence,
-                i: Int,
-                i1: Int,
-                i2: Int
-            ) {
-            }
-
-            override fun afterTextChanged(editable: Editable) {
-                //after the change calling the method and passing the search input
-                filter(editable.toString())
-            }
-        })
 
         return view
     }
@@ -118,12 +114,12 @@ class UsersFragment : Fragment() {
             }
     }
 
-    private fun filter(text: String) {
+/*    private fun filter(text: String) {
         //new array list that will hold the filtered data
-        val filterdNames: ArrayList<String> = ArrayList()
+        val filterdNames: ArrayList<ClienListModel> = ArrayList()
 
         //looping through existing elements
-        for (s in listNames) {
+        for (s in listNames.get(0)) {
             //if the existing elements contains the search input
             if (s.toLowerCase().contains(text.toLowerCase())) {
                 //adding the element to filtered list
@@ -133,7 +129,7 @@ class UsersFragment : Fragment() {
 
         //calling a method of the adapter class and passing the filtered list
         adapter1.filterList(filterdNames)
-    }
+    }*/
 
     fun pushFragment(
         newFragment: Fragment?,

@@ -35,8 +35,7 @@ class AppointmentInfoPresenter: RetrofitCallbacks.ServerResponseInterface {
                                  txt_estimate:TextView,
                                  txt_time:TextView,
                                  txt_case_disc:TextView,
-                                 txt_hope_disc:TextView,
-    ) {
+                                 txt_hope_disc:TextView, ) {
         this.context = context
         this.img_profile = img_profile
         this.txt_name = txt_name

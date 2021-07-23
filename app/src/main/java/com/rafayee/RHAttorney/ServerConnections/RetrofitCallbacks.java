@@ -196,6 +196,10 @@ public class RetrofitCallbacks {
     }
 */
 
+
+
+
+
     public void ApiCallbacksGet(final Context context, String EndUrl, final String from) {
         Log.e("sas",from);
         this.context = context;

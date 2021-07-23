@@ -22,6 +22,7 @@ class ForgotPresenter : RetrofitCallbacks.ServerResponseInterface {
     lateinit var email: TextInputEditText
     lateinit var context: Context
     lateinit var strFrom :String
+
     fun forgotInstance(context: Context, email: TextInputEditText) {
         this.email = email
         this.context = context
@@ -47,6 +48,7 @@ class ForgotPresenter : RetrofitCallbacks.ServerResponseInterface {
             Toast.makeText(context, "Enter email", Toast.LENGTH_SHORT).show()
         }
     }
+
     fun forgotApi(context:Context,email:String){
         ProgressDialog.getInstance().showProgress(context)
         var forgotObject: JsonObject = JsonObject()
